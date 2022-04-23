@@ -14,9 +14,6 @@ Reader = csv.reader(File)
 Data = list(Reader)
 
 class MAINPAGE:
-
-    
-    
     def switch(self, Frame):
         Frame.tkraise()
         
