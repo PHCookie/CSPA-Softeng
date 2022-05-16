@@ -1,15 +1,18 @@
 import sys
 import tkinter as tk
 import tkinter.ttk as ttk
+from tkinter import messagebox
 from tkinter.constants import *
 
 import Registration_support
 
 class Register:
-    def login_screen(self):
-        self.top.destroy()
-        import os
-        os.system('python Login.py')
+    def login_popup(self):
+        response = messagebox.askyesno("Warning!","Return to Login Screen?")
+        if response == 1:
+            self.top.destroy()
+            import os
+            os.system('python Login.py')
     
     def __init__(self, top=None):
         '''This class configures and populates the toplevel window.
@@ -74,7 +77,7 @@ class Register:
         self.Button2.configure(highlightcolor="black")
         self.Button2.configure(pady="0")
         self.Button2.configure(text='''Log in''')
-        self.Button2.configure(command=self.login_screen)
+        self.Button2.configure(command=self.login_popup)
 
         self.Entry1 = tk.Entry(self.top)
         self.Entry1.place(relx=0.25, rely=0.333, height=30, relwidth=0.234)

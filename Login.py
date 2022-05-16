@@ -1,6 +1,7 @@
 import sys
 import tkinter as tk
 import tkinter.ttk as ttk
+from tkinter import messagebox
 from tkinter.constants import *
 
 import Login_support
@@ -8,10 +9,12 @@ import Login_support
 global status_label
 
 class Login:
-    def registration_screen(self):
-        self.top.destroy()
-        import os
-        os.system('python Registration.py')
+    def registration_popup(self):
+        response = messagebox.askyesno("Note!","Proceed to Sign up?")
+        if response == 1:
+            self.top.destroy()
+            import os
+            os.system('python Registration.py')
 
     def main_screen(self):
         self.top.destroy()
@@ -39,12 +42,12 @@ class Login:
         
         #CSPA TITLE LABEL
         self.Label3 = tk.Label(self.top)
-        self.Label3.place(relx=0.2, rely=0.1, height=63, width=1048)
+        self.Label3.place(relx=0.15, rely=0.1, height=63, width=1048)
         self.Label3.configure(anchor='w')
         self.Label3.configure(background="#160A26")
         self.Label3.configure(compound='left')
         self.Label3.configure(disabledforeground="#a3a3a3")
-        self.Label3.configure(font="-family {Segoe UI} -size 20")
+        self.Label3.configure(font="-family {Segoe UI} -size 25")
         self.Label3.configure(foreground="#ffffff")
         self.Label3.configure(text='''Credit Scoring and Predictive Analytics Application Software''')
         
@@ -64,7 +67,7 @@ class Login:
         self.Button1.configure(highlightcolor="black")
         self.Button1.configure(pady="0")
         self.Button1.configure(text='''Sign up''')
-        self.Button1.configure(command=self.registration_screen)
+        self.Button1.configure(command=self.registration_popup)
         
     
         #"Log in |" label
