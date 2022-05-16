@@ -8,18 +8,27 @@ import Login_support
 
 global status_label
 
-class Login:
+class Login: 
     def registration_popup(self):
         response = messagebox.askyesno("Note!","Proceed to Sign up?")
         if response == 1:
             self.top.destroy()
             import os
             os.system('python Registration.py')
-
-    def main_screen(self):
-        self.top.destroy()
-        import os
-        os.system('python Mainpage.py')
+     
+    def login_entry(self):
+        errors = []
+        if self.Entry1.get() == '':
+            errors.append('Username field is Empty')
+        if self.Entry1_1.get() == '':
+            errors.append('Password field is Empty')
+        #Condition for Errors or Proceed    
+        if errors:
+            messagebox.showerror("Error", '\n'.join(errors))
+        else:
+            self.top.destroy()
+            import os
+            os.system('python Mainpage.py')
         
     
     def __init__(self, top=None):
@@ -145,7 +154,7 @@ class Login:
         self.Button2.configure(highlightcolor="black")
         self.Button2.configure(pady="0")
         self.Button2.configure(text='''LOGIN''')
-        self.Button2.configure(command=self.main_screen)
+        self.Button2.configure(command=self.login_entry)
 
 
 def start_up():
