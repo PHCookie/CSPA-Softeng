@@ -7,6 +7,23 @@ from tkinter.constants import *
 import Registration_support
 
 class Register:
+    def entry_check(self):
+        errors = []
+        if self.Entry1.get() == '':
+            errors.append('Name field is Empty')
+        if self.Entry1_1.get() == '':
+            errors.append('Address field is Empty')
+        if self.Entry1_2.get() == '':
+            errors.append('Position at Work field is Empty')
+        if self.Entry1_3.get() == '':
+            errors.append('Username field is Empty')
+        if self.Entry1_4.get() == '':
+            errors.append('Password field is Empty')   
+        #Condition for Errors or Proceed    
+        if errors:
+          messagebox.showerror("Error", '\n'.join(errors))
+
+    
     def login_popup(self):
         response = messagebox.askyesno("Warning!","Return to Login Screen?")
         if response == 1:
@@ -47,6 +64,7 @@ class Register:
         self.Button1.configure(pady="0")
         self.Button1.configure(relief="groove")
         self.Button1.configure(text='''Create Account''')
+        self.Button1.configure(command=self.entry_check)
 
         self.Label1 = tk.Label(self.top)
         self.Label1.place(relx=0.59, rely=0.533, height=21, width=204)
@@ -79,6 +97,7 @@ class Register:
         self.Button2.configure(text='''Log in''')
         self.Button2.configure(command=self.login_popup)
 
+        #Name Entry
         self.Entry1 = tk.Entry(self.top)
         self.Entry1.place(relx=0.25, rely=0.333, height=30, relwidth=0.234)
         self.Entry1.configure(background="white")
@@ -91,6 +110,7 @@ class Register:
         self.Entry1.configure(selectbackground="blue")
         self.Entry1.configure(selectforeground="white")
 
+        #Address Entry
         self.Entry1_1 = tk.Entry(self.top)
         self.Entry1_1.place(relx=0.25, rely=0.433, height=30, relwidth=0.234)
         self.Entry1_1.configure(background="white")
@@ -103,6 +123,7 @@ class Register:
         self.Entry1_1.configure(selectbackground="blue")
         self.Entry1_1.configure(selectforeground="white")
 
+        #PositionAtWork Entry
         self.Entry1_2 = tk.Entry(self.top)
         self.Entry1_2.place(relx=0.25, rely=0.533, height=30, relwidth=0.234)
         self.Entry1_2.configure(background="white")
@@ -115,6 +136,7 @@ class Register:
         self.Entry1_2.configure(selectbackground="blue")
         self.Entry1_2.configure(selectforeground="white")
 
+        #Username Entry
         self.Entry1_3 = tk.Entry(self.top)
         self.Entry1_3.place(relx=0.25, rely=0.633, height=30, relwidth=0.234)
         self.Entry1_3.configure(background="white")
@@ -127,6 +149,7 @@ class Register:
         self.Entry1_3.configure(selectbackground="blue")
         self.Entry1_3.configure(selectforeground="white")
 
+        #Password Entry
         self.Entry1_4 = tk.Entry(self.top)
         self.Entry1_4.place(relx=0.25, rely=0.733, height=30, relwidth=0.234)
         self.Entry1_4.configure(background="white")
