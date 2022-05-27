@@ -16,14 +16,41 @@ class Login:
             import os
             os.system('python Registration.py')
      
-    def login_entry(self):
+    def login_verification (self):
+        
         errors = []
+        #Check if Empty
         if self.Entry1.get() == '':
             errors.append('Username field is Empty')
         if self.Entry1_1.get() == '':
             errors.append('Password field is Empty')
-        #Condition for Errors or Proceed    
+
+        #Condition for Errors
         if errors:
+            messagebox.showerror("Error", '\n'.join(errors))
+            return
+
+
+        #Check if email exists
+        df = pd.read_csv("User_Information.csv")
+        email_list = df['Username'].str.split(',', expand=True)
+        row = 0       
+        errors.append('Username does not exist. Consider Signing up')
+        
+        for i in range (    len(email_list)  ):
+            if email_list[0].iloc[i].lower() == self.Entry1.get().lower():
+                errors = []
+                row = i
+                break
+                
+
+        if errors:
+            messagebox.showerror("Error", '\n'.join(errors))
+            return
+    
+        #Checks if matching Password
+        if self.Entry1_1.get() != df.iat[row,3]:
+            errors.append('Wrong Password or Email.')
             messagebox.showerror("Error", '\n'.join(errors))
         else:
             self.top.destroy()
@@ -154,7 +181,7 @@ class Login:
         self.Button2.configure(highlightcolor="black")
         self.Button2.configure(pady="0")
         self.Button2.configure(text='''LOGIN''')
-        self.Button2.configure(command=self.login_entry)
+        self.Button2.configure(command=self.login_verification)
 
 
 def start_up():
