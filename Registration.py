@@ -2,14 +2,41 @@ import sys
 import tkinter as tk
 import tkinter.ttk as ttk
 import csv
+import pandas as pd
+import regex as re
 from tkinter import messagebox
 from tkinter.constants import *
 
 import Registration_support
 
 class Register:
+
+    #borrowed from https://stackoverflow.com/questions/16709638/
+    #checking-the-strength-of-a-password-how-to-check-conditions
+    def password_check(self):
+
+        password = self.Entry1_4.get()
+
+        # calculating the length
+        length_error = len(password) < 8
+
+        # searching for digits
+        digit_error = re.search(r"\d", password) is None
+
+        # searching for symbols
+        symbol_error = re.search(r"\W", password) is None
+
+        # overall result
+        password_ok = not ( length_error or digit_error or symbol_error )
+
+        return password_ok
+
+    
     def entry_check(self):
+        
         errors = []
+
+        #Check if Empty
         if self.Entry1.get() == '':
             errors.append('Name field is Empty')
         if self.Entry1_1.get() == '':
@@ -22,40 +49,71 @@ class Register:
             errors.append('Password field is Empty')
         if ( self.Entry1_4.get() != self.Entry_rePass.get() ):
             errors.append('Password does not match')
-        #Condition for Errors or Proceed
+
+
+        #check if Taken
+        df = pd.read_csv("User_Information.csv")
+        
+        name_list = df['Name'].str.split(',', expand=True)
+        for i in range (    len(name_list)  ):
+            if name_list[0].iloc[i] == self.Entry1.get():
+                errors.append('Name is already taken')
+        email_list = df['Username'].str.split(',', expand=True)
+        for i in range (    len(email_list)  ):
+            if email_list[0].iloc[i].lower() == self.Entry1_3.get().lower():
+                errors.append('Username is already taken')
+        
+            
+        #Errors or Proceed P1
         if errors:
             messagebox.showerror("Error", '\n'.join(errors))
+            return
+
+        #check if appropriate username or password
+        if not re.match(r"^[A-Za-z0-9\.\+_-]+@[A-Za-z0-9\._-]+\.[a-zA-Z]*$", self.Entry1_3.get()):
+            errors.append('Invalid Email. Please use format of: cspa@example.com\n')                    
+        if self.password_check() == False :
+            errors.append('Password is weak! Please make sure to do the following: \
+        8 characters length or more\n1 digit or more\n1 symbol or more')
+
+        #Errors or Proceed P2
+        if errors:
+            messagebox.showerror("Error", '\n'.join(errors))
+            return            
+
+        #proceeding to accepting register
+        response = messagebox.askyesno("Proceed","Information Finalized?") #MAKE LESS FORMAL lmao
+        if response == 0:
+            return
         else:
-            response = messagebox.askyesno("Proceed","Information Fanalized?") #!MAKE LESS FORMAL lmao
-            if response == 0:
-                return
-            else:
-                self.entry_registration()  
+            self.entry_registration()  
 
 
-    #placing information onto User_Information
-    def entry_registration (self):
-            
-        
+
+    #placing information onto User_Information - registration
+    def entry_registration (self):      
         name = self.Entry1.get()
         addr = self.Entry1_1.get()
         user = self.Entry1_3.get()
         passw = self.Entry1_4.get()
         pos = self.Entry1_2.get()
+           
+        with open("User_Information.csv", 'r', newline='') as inputFile, \
+        open("User_Information.csv", 'a', newline='') as writerFile:        
 
-        
-        with open ("User_Information.csv",mode="a", newline='') as f:
-            writer = csv.writer (f,delimiter=",")
-
-            writer.writerow(['',name,user,passw,addr, pos])
+            #checks current row index (as ID)
+            line_count = -1
+            for row in inputFile:
+                line_count += 1
+            writer = csv.writer (writerFile,delimiter=",")        
+            writer.writerow([line_count,name,user,passw,addr, pos])
        
-        response = messagebox.showinfo("Success!","You have successfully Registered.") #!newline saying 'proceed to login?'
+        #proceeding to login
+        response = messagebox.showinfo("Success!","You have successfully Registered.")
         self.top.destroy()
         import os
-        os.system('python Login.py') #!not sure if this works
-        
-       #!need to go to log-in page
-                
+        os.system('python Login.py')
+               
 
     def login_popup(self):
         response = messagebox.askyesno("Warning!","Return to Login Screen?")
@@ -63,7 +121,9 @@ class Register:
             self.top.destroy()
             import os
             os.system('python Login.py')
-    
+ 
+
+
     def __init__(self, top=None):
         '''This class configures and populates the toplevel window.
            top is the toplevel containing window.'''
@@ -195,6 +255,19 @@ class Register:
         self.Entry1_4.configure(selectbackground="blue")
         self.Entry1_4.configure(selectforeground="white")
 
+        #Re-Enter Password Entry
+        self.Entry_rePass = tk.Entry(self.top)
+        self.Entry_rePass.place(relx=0.25, rely=0.833, height=30, relwidth=0.234)
+        self.Entry_rePass.configure(background="white")
+        self.Entry_rePass.configure(disabledforeground="#a3a3a3")
+        self.Entry_rePass.configure(font="TkFixedFont")
+        self.Entry_rePass.configure(foreground="#000000")
+        self.Entry_rePass.configure(highlightbackground="#d9d9d9")
+        self.Entry_rePass.configure(highlightcolor="black")
+        self.Entry_rePass.configure(insertbackground="black")
+        self.Entry_rePass.configure(selectbackground="blue")
+        self.Entry_rePass.configure(selectforeground="white")
+
         self.Label2 = tk.Label(self.top)
         self.Label2.place(relx=0.284, rely=0.217, height=41, width=184)
         self.Label2.configure(activebackground="#f9f9f9")
@@ -263,7 +336,7 @@ class Register:
         self.Label3_3.configure(foreground="#ffffff")
         self.Label3_3.configure(highlightbackground="#d9d9d9")
         self.Label3_3.configure(highlightcolor="black")
-        self.Label3_3.configure(text='''Username''')
+        self.Label3_3.configure(text='''Email''') #makes more sense? name already exists
 
         self.Label3_4 = tk.Label(self.top)
         self.Label3_4.place(relx=0.12, rely=0.733, height=21, width=64)
@@ -279,11 +352,28 @@ class Register:
         self.Label3_4.configure(highlightcolor="black")
         self.Label3_4.configure(text='''Password''')
 
+        self.RePass = tk.Label(self.top)
+        self.RePass.place(relx=0.063, rely=0.833, height=21, width=130)
+        self.RePass.configure(activebackground="#f9f9f9")
+        self.RePass.configure(activeforeground="black")
+        self.RePass.configure(anchor='w')
+        self.RePass.configure(background="#160A26")
+        self.RePass.configure(compound='left')
+        self.RePass.configure(disabledforeground="#a3a3a3")
+        self.RePass.configure(font="-family {Segoe UI} -size 10 -weight bold")
+        self.RePass.configure(foreground="#ffffff")
+        self.RePass.configure(highlightbackground="#d9d9d9")
+        self.RePass.configure(highlightcolor="black")
+        self.RePass.configure(text='''Re-enter Password''')
+
 def start_up():
     Registration_support.main()
 
 if __name__ == '__main__':
     Registration_support.main()
+
+
+
 
 
 
