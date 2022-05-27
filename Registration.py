@@ -1,6 +1,7 @@
 import sys
 import tkinter as tk
 import tkinter.ttk as ttk
+import csv
 from tkinter import messagebox
 from tkinter.constants import *
 
@@ -22,7 +23,32 @@ class Register:
         #Condition for Errors or Proceed    
         if errors:
           messagebox.showerror("Error", '\n'.join(errors))
+        
+        else:
+            #all info should be verified
+            entry_registration (self)
 
+
+    #placing information onto User_Information
+    def entry_registration (self):
+        
+        name = self.Entry1.get()
+        addr = self.Entry1_1.get()
+        user = self.Entry1_3.get()
+        passw = self.Entry1_4.get()
+        pos = self.Entry1_2.get()
+        
+        with open ("User_Information.csv", mode="a", newline="") as f:
+            writer = csv.writer (f,delimiter=",")
+
+            writer.writerow([name,user,passw,addr, pos])
+            
+       #!need to add successful registration popup
+       #!need to go to log-in page
+                
+        
+        
+        open(username_info+)
     
     def login_popup(self):
         response = messagebox.askyesno("Warning!","Return to Login Screen?")
