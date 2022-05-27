@@ -19,37 +19,44 @@ class Register:
         if self.Entry1_3.get() == '':
             errors.append('Username field is Empty')
         if self.Entry1_4.get() == '':
-            errors.append('Password field is Empty')   
-        #Condition for Errors or Proceed    
+            errors.append('Password field is Empty')
+        if ( self.Entry1_4.get() != self.Entry_rePass.get() ):
+            errors.append('Password does not match')
+        #Condition for Errors or Proceed
         if errors:
-          messagebox.showerror("Error", '\n'.join(errors))
-        
+            messagebox.showerror("Error", '\n'.join(errors))
         else:
-            #all info should be verified
-            entry_registration (self)
+            response = messagebox.askyesno("Proceed","Information Fanalized?") #!MAKE LESS FORMAL lmao
+            if response == 0:
+                return
+            else:
+                self.entry_registration()  
 
 
     #placing information onto User_Information
     def entry_registration (self):
+            
         
         name = self.Entry1.get()
         addr = self.Entry1_1.get()
         user = self.Entry1_3.get()
         passw = self.Entry1_4.get()
         pos = self.Entry1_2.get()
+
         
-        with open ("User_Information.csv", mode="a", newline="") as f:
+        with open ("User_Information.csv",mode="a", newline='') as f:
             writer = csv.writer (f,delimiter=",")
 
-            writer.writerow([name,user,passw,addr, pos])
-            
-       #!need to add successful registration popup
+            writer.writerow(['',name,user,passw,addr, pos])
+       
+        response = messagebox.showinfo("Success!","You have successfully Registered.") #!newline saying 'proceed to login?'
+        self.top.destroy()
+        import os
+        os.system('python Login.py') #!not sure if this works
+        
        #!need to go to log-in page
                 
-        
-        
-        open(username_info+)
-    
+
     def login_popup(self):
         response = messagebox.askyesno("Warning!","Return to Login Screen?")
         if response == 1:
