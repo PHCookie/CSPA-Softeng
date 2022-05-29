@@ -13,7 +13,12 @@ chargedoff_dataset = clean_dataset[dataset["Loan Status"] == "Charged Off"]
 
 # Calculation:
 # --------Payment history (35%)--------
-
+#1.Payment information on credit cards, retail accounts, installment loans, mortgages and other types of accounts
+#2.How overdue delinquent payments are today or may have become in the past
+#3.The amount of money still owed on delinquent accounts or collection items
+#4.The number of past due items on a credit report. Adverse public records (e.g., bankruptcies)
+#5.The amount of time that's passed since delinquencies, adverse public records or collection items were introduced
+#6.The number of accounts that are being paid as agreed
 # ------Accounts owed (30%)-----------
 account_owed = clean_dataset["Current Loan Amount"]
 #print(account_owed)
