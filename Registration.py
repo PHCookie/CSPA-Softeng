@@ -325,7 +325,7 @@ class Register:
         self.Label3_2.configure(text='''Position at Work''')
 
         self.Label3_3 = tk.Label(self.top)
-        self.Label3_3.place(relx=0.12, rely=0.633, height=21, width=74)
+        self.Label3_3.place(relx=0.079, rely=0.633, height=21, width=110)
         self.Label3_3.configure(activebackground="#f9f9f9")
         self.Label3_3.configure(activeforeground="black")
         self.Label3_3.configure(anchor='w')
@@ -336,7 +336,7 @@ class Register:
         self.Label3_3.configure(foreground="#ffffff")
         self.Label3_3.configure(highlightbackground="#d9d9d9")
         self.Label3_3.configure(highlightcolor="black")
-        self.Label3_3.configure(text='''Email''') #makes more sense? name already exists
+        self.Label3_3.configure(text='''Email(Username)''') #makes more sense? name already exists
 
         self.Label3_4 = tk.Label(self.top)
         self.Label3_4.place(relx=0.12, rely=0.733, height=21, width=64)

@@ -7,11 +7,7 @@ import Mainpage_support
 from PIL import Image, ImageTk
 
 #### IMPORTING Dataset
-import csv 
-data_set='data/CSPA_test.csv'
-File = open(data_set)
-Reader = csv.reader(File)
-Data = list(Reader)
+
 
 class MAINPAGE:
     #For switching Frames
@@ -198,10 +194,6 @@ class MAINPAGE:
         self.canva4.place(relx=0.411, rely=0.205, height=500, width=550)
         self.canva4.configure(bg="gray")
         ###Displaying   
-        self.canva4.list_of_ids=tk.Canvas(self.ABOUTDATA)
-        self.canva4.list_of_ids=[]
-        for x in list(range(0,len(Data))):
-            self.canva4.list_of_ids.append(Data[x][0])
          ###--END OF Canva Dataset Content----###
         #--------------------------END OF ABOUT DATA FRAME----------------------------------------------
         

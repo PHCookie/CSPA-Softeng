@@ -8,6 +8,7 @@ dataset = pd.read_csv('data/credit_train.csv')
 #Remove unwanted values "999999999"
 clean_dataset = dataset[dataset["Current Loan Amount"] < 99999999 ]
 
+
 #to display all values
 pd.set_option("display.max_rows", None, "display.max_columns", None)
 
@@ -50,27 +51,21 @@ limit_minor2_score = round(minor2_score, 2)
 #print(limit_minor2_score)
 
 #3. Length of Credit History
-minor3_score = credit_history
+minor3_score = credit_history * 10
 
 #4 New credit or Credit Mix
-minor4_score = accounts
+minor4_score = accounts * 10
 
 #total of all scores
 Credit_score = minor1_score + minor2_score + minor3_score + minor4_score
-format_Credit_score = round(Credit_score, 2)
+format_Credit_score = round(Credit_score)
 
-# Adding to csv
-#dataset["Calculated CreditScore"] = format_Credit_score
-#dataset.to_csv("new_credit_train.csv", index=False)
+print (format_Credit_score)
 
+#Adding to csv
+#dataset["Score"] = format_Credit_score
+#dataset.to_csv("data/new_credit_train.csv", index=False)
 
-#Credit Score Correction scaled by 10
-#credit_score = clean_dataset[clean_dataset["Credit Score"] < 850]
-#normal_score = credit_score["Credit Score"]
-#print(normal_score)
-#abnormal_cscore = clean_dataset[clean_dataset["Credit Score"] > 850]
-#scale_cscore = abnormal_cscore["Credit Score"] / 10
-#print(scale_cscore)
 
 
 
