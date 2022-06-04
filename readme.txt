@@ -4,6 +4,7 @@ pip install pandas
 pip install pillow
 pip install graphviz
 pip install pydotplus
+pip install regex
 
 # to avoid sklearn.externals.six incompatibility
 from six import StringIO
