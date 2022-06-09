@@ -62,15 +62,15 @@ exceptional_id = exceptional_score["Customer ID"]
 # print("Number of Customers:",len(exceptional))
 # print("Total:",len(exceptional) + len(verygood) + len(good) + len(fair) + len(poor) )
 
-####-----BAR CHART-----#####
-Category = ['Poor','Fair','Good','Very Good','Exceptional']
-Number_of_Customer = [len(poor),len(fair),len(good),len(verygood),len(exceptional)]
+##-----BAR CHART-----#####
+# Category = ['Poor','Fair','Good','Very Good','Exceptional']
+# Number_of_Customer = [len(poor),len(fair),len(good),len(verygood),len(exceptional)]
 
-plt.bar(Category, Number_of_Customer)
-plt.title('Credit Scores Categorization')
-plt.xlabel('Category')
-plt.ylabel('Number of Customer')
-plt.show()
+# plt.bar(Category, Number_of_Customer)
+# plt.title('Credit Scores Categorization')
+# plt.xlabel('Category')
+# plt.ylabel('Number of Customer')
+# plt.show()
 
 # ###-----DECISION TREE ALGORITHM---###
 # #Converting scores from float to integer

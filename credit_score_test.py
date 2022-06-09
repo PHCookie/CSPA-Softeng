@@ -33,23 +33,54 @@ credit_history = clean_dataset["Years of Credit History"]
 minor4_score = accounts
 
 ####----GENERATING SCORES----####
+pd.options.display.float_format = '{:.2f}'.format
 #1.Payment History
-calc_value = first_value / second_value
-approx_score = calc_value / accounts
-minor1_score = approx_score - delinquent
+loan_amount = clean_dataset["Current Loan Amount"]
+payment = loan_amount + account_owed
+calc_value = payment / first_value
+# print(calc_value)
+#1.2 Years of credit history converted to points 1yr=2.67
+years = second_value * 2.67
+# print(years)
+#job years
+job = clean_dataset["Years in current job"]
+minor1_score = calc_value + years + accounts + second_value + job
+# approx_score = calc_value / accounts
+# minor1_score = approx_score + delinquent
 limit_minor1_score=round(minor1_score, 2)
-#print(limit_minor1_score)
+# print(limit_minor1_score)
 
 #2. Accounts Owed
-value1 = account_owed / accounts
-monthly_debt = first_value
-value2 = monthly_debt / accounts
-minor2_score = value1 / value2
-limit_minor2_score = round(minor2_score, 2)
-#print(limit_minor2_score)
+value1 = account_owed 
+value2 = clean_dataset["Maximum Open Credit"]
+value3 = clean_dataset["Current Credit Balance"]
+p_borrow = (value3 / value2) 
+score2 = 255 * (1 - p_borrow) 
+
+scoresss = score2 + limit_minor1_score
+
+# print(p_borrow)
+# print(value1)
+# minor2_score = value1 + value2 + value3
+# limit_minor2_score = round(minor2_score, 2)
+# print(limit_minor2_score)
+# print(value3)
+
 
 #3. Length of Credit History
-minor3_score = credit_history * 10
+#ignored delinquent above 84
+deduct_delinquent = clean_dataset[clean_dataset["Months since last delinquent"] <= 84 ] 
+deducted = deduct_delinquent["Months since last delinquent"] * 1.54
+print(deducted)
+
+added = np.where(deducted == 0 , 127.5, deducted)
+# print(added)
+
+final_delinquent = deducted + added
+# print(final_delinquent)
+
+# print(deduct_delinquent)
+minor3_score = credit_history 
 
 #4 New credit or Credit Mix
 minor4_score = accounts * 10
@@ -57,7 +88,7 @@ minor4_score = accounts * 10
 #total of all scores
 Credit_score = minor1_score + minor2_score + minor3_score + minor4_score
 format_Credit_score = round(Credit_score)
-#print (format_Credit_score)
+# print (format_Credit_score)
 
 
 ###-----ADDING NEW COLUMNS WITH CALCULATED VALUES TO CSV-----###
@@ -67,19 +98,19 @@ format_Credit_score = round(Credit_score)
 
 #####-----REPLACE NaN VALUES WITH 0-----####
 #dataset= dataset.fillna(0)
-#####-----FILTER CREDIT SCORES BETWEEN 0 - 850-----#####
+# ####-----FILTER CREDIT SCORES BETWEEN 0 - 850-----#####
 # filter_score = dataset[dataset["Score"] > 0]
 # score_range = filter_score[(filter_score["Score"] > 0) & (filter_score["Score"] <= 850)] 
 
 
-# #####-----CATEGORIZING SCORES-----#####
+# # #####-----CATEGORIZING SCORES-----#####
 # #1. Poor Credit Scores
 # poor_score = filter_score[(filter_score["Score"] > 0) & (filter_score["Score"] <= 579)]  
 # poor = poor_score["Score"]
 # poor_id = poor_score["Customer ID"]
 # print("POOR CREDIT SCORES:")
 # print(poor)
-# print("Number of Customers:",len(poor))
+# # print("Number of Customers:",len(poor))
 
 # #2. Fair Credit Scores
 # fair_score = filter_score[(filter_score["Score"] >= 580) & (filter_score["Score"] <= 669)]  
