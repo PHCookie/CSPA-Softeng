@@ -33,22 +33,23 @@ credit_history = clean_dataset["Years of Credit History"]
 minor4_score = accounts
 
 ####----GENERATING SCORES----####
+#To display values in 2 decimal places
 pd.options.display.float_format = '{:.2f}'.format
+
 #1.Payment History
 loan_amount = clean_dataset["Current Loan Amount"]
 payment = loan_amount + account_owed
 calc_value = payment / first_value
 # print(calc_value)
-#1.2 Years of credit history converted to points 1yr=2.67
-years = second_value * 2.67
+
 # print(years)
-#job years
+#Job years years = 1 point
 job = clean_dataset["Years in current job"]
-minor1_score = calc_value + years + accounts + second_value + job
-# approx_score = calc_value / accounts
-# minor1_score = approx_score + delinquent
-limit_minor1_score=round(minor1_score, 2)
-# print(limit_minor1_score)
+minor1_score = calc_value + accounts + second_value + job
+
+#FINAL SCORE FOR PAYMENT HISTORY
+final_minor1_score=round(minor1_score, 2)
+# print(final_minor1_score)
 
 #2. Accounts Owed
 value1 = account_owed 
@@ -56,44 +57,42 @@ value2 = clean_dataset["Maximum Open Credit"]
 value3 = clean_dataset["Current Credit Balance"]
 p_borrow = (value3 / value2) 
 score2 = 255 * (1 - p_borrow) 
-
-scoresss = score2 + limit_minor1_score
-
-# print(p_borrow)
-# print(value1)
-# minor2_score = value1 + value2 + value3
-# limit_minor2_score = round(minor2_score, 2)
-# print(limit_minor2_score)
-# print(value3)
+# print(score2)
+#FINAL SCORE FOR ACCOUNTS OWED
+final_minor2_score = score2 
+# print(final_minor2_score)
 
 
 #3. Length of Credit History
-#ignored delinquent above 84
+#Ignore delinquent above 84
 deduct_delinquent = clean_dataset[clean_dataset["Months since last delinquent"] <= 84 ] 
 deducted = deduct_delinquent["Months since last delinquent"] * 1.54
-print(deducted)
-
-added = np.where(deducted == 0 , 127.5, deducted)
+# print(deducted)
+added = deducted.replace(0, 127.5)
 # print(added)
-
 final_delinquent = deducted + added
 # print(final_delinquent)
-
-# print(deduct_delinquent)
-minor3_score = credit_history 
+#FINAL SCORE FOR LENGTH OF CREDIT HISTORY
+#1.2 Years of credit history converted to points 1yr=2.67
+years = second_value * 2.67
+final_minor3_score = years + final_delinquent
 
 #4 New credit or Credit Mix
-minor4_score = accounts * 10
+final_minor4_score = accounts 
 
+#5 Standard Starting Credit Score 
+
+starting_score = 300
 #total of all scores
-Credit_score = minor1_score + minor2_score + minor3_score + minor4_score
+Credit_score = starting_score + final_minor1_score + final_minor2_score + final_minor3_score + final_minor4_score
 format_Credit_score = round(Credit_score)
 # print (format_Credit_score)
-
+# exceptional_score = (format_Credit_score <= 739) & (format_Credit_score >= 670)
+# print(exceptional_score)  
 
 ###-----ADDING NEW COLUMNS WITH CALCULATED VALUES TO CSV-----###
-#dataset["Score"] = format_Credit_score
-#dataset.to_csv("data/new_credit_train.csv", index=False)
+# dataset["Score"] = format_Credit_score
+# dataset.to_csv("data/new_credit_train.csv", index=False)
 
 
 #####-----REPLACE NaN VALUES WITH 0-----####
