@@ -11,14 +11,14 @@ from sklearn import metrics #Import scikit-learn metrics module for accuracy cal
 #to display all output values
 pd.set_option("display.max_rows", None, "display.max_columns", None)
 
-df = pd.read_csv('data/new_credit_train.csv')
+df = pd.read_csv('data/new_credit_train.csv', header=0)
 
 # replace NaN values with 0
 df= df.fillna(0)
+
 #Filter  Credit Scores Greater than 0
 filter_score = df[df["Score"] > 0]
 score_range = filter_score[(filter_score["Score"] > 0) & (filter_score["Score"] <= 850)] 
-
 
 #####-----CATEGORIZING SCORES-----#####
 #1. Poor Credit Scores
@@ -62,6 +62,14 @@ exceptional_id = exceptional_score["Customer ID"]
 # print("Number of Customers:",len(exceptional))
 # print("Total:",len(exceptional) + len(verygood) + len(good) + len(fair) + len(poor) )
 
+##-----LOAN STATUS BAR-----##
+# coffvalue = score_range[score_range['Loan'] == 0]['Loan'].count()
+# fpaidvalue = score_range[score_range['Loan'] == 1]['Loan'].count()
+# data = {"Counts":[coffvalue, fpaidvalue] }
+# statusDF = pd.DataFrame(data, index=["Charged Off", "Fully Paid"])
+# statusDF.plot(kind='bar', title="Status of the Loan")
+# plt.show()
+
 ##-----BAR CHART-----#####
 # Category = ['Poor','Fair','Good','Very Good','Exceptional']
 # Number_of_Customer = [len(poor),len(fair),len(good),len(verygood),len(exceptional)]
@@ -72,33 +80,28 @@ exceptional_id = exceptional_score["Customer ID"]
 # plt.ylabel('Number of Customer')
 # plt.show()
 
-# ###-----DECISION TREE ALGORITHM---###
-# #Converting scores from float to integer
-# f_cols = score_range["Score"]
-# #reshaping 1d to 2d array
-# feature_cols= f_cols.values.reshape(-1,1)
+#-----DECISION TREE ALGORITHM---###
+#Converting scores from float to integer
+y_cols = score_range["Loan"]
+x_cols = ['Current Loan Amount', 'Years in current job', 'Monthly Debt','Years of Credit History', 'Months since last delinquent','Number of Open Accounts', 'Current Credit Balance', 'Maximum Open Credit']
 
-# # print(feature_cols)
-# #split dataset in features and target variable
-# dtm_loan = score_range["Loan"]
-# X = feature_cols # Features
-# y = dtm_loan # Target variable
+X = score_range[x_cols]# Features
+y = y_cols # Target variable
 
+#Split dataset into training set and test set
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=1) # 70% training and 30% test
 
-# # Split dataset into training set and test set
-# X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=1) # 70% training and 30% test
+# Create Decision Tree classifer object
+clf = DecisionTreeClassifier(criterion="entropy", max_depth=3)
 
-# # Create Decision Tree classifer object
-# clf = DecisionTreeClassifier(criterion="entropy", max_depth=3)
+# Train Decision Tree Classifer
+clf = clf.fit(X_train,y_train)
 
-# # Train Decision Tree Classifer
-# clf = clf.fit(X_train,y_train)
+#Predict the response for test dataset
+y_pred = clf.predict(X_test)
 
-# #Predict the response for test dataset
-# y_pred = clf.predict(X_test)
-
-# # Model Accuracy, how often is the classifier correct?
-# print("Accuracy:",metrics.accuracy_score(y_test, y_pred))
+# Model Accuracy, how often is the classifier correct?
+print("Accuracy:",metrics.accuracy_score(y_test, y_pred))
 
 # #Libraries for graphing
 # from sklearn.tree import export_graphviz 
@@ -110,8 +113,8 @@ exceptional_id = exceptional_score["Customer ID"]
 
 # dot_data = StringIO()
 # export_graphviz(clf, out_file=dot_data,  
-#                 filled=True, rounded=True,
-#                 special_characters=True)
+#                 filled=True, rounded=True,  
+#                 special_characters=True, feature_names = x_cols,class_names=['0','1'])
 # graph = pydotplus.graph_from_dot_data(dot_data.getvalue())  
 # graph.write_png('dtm.png')
 # Image(graph.create_png())
