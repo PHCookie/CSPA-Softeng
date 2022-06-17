@@ -16,46 +16,36 @@ clean_dataset = dataset[dataset["Current Loan Amount"] < 99999999 ]
 #to display all values
 pd.set_option("display.max_rows", None, "display.max_columns", None)
 
-###-----INDEXING VALUES---###
-# --------Payment history (35%)--------
-#1.Payment information on credit cards, retail accounts, installment loans, mortgages and other types of accounts
-first_value = clean_dataset["Monthly Debt"]
-second_value = clean_dataset["Years of Credit History"]
-#2.How overdue delinquent payments are today or may have become in the past and #3.The amount of time that's passed since delinquencies, adverse public records or collection items were introduced
-delinquent = clean_dataset['Months since last delinquent']
-#4.The number of accounts that are being paid as agreed
-accounts = clean_dataset["Number of Open Accounts"]
-# ------Accounts owed (30%)-----------
-account_owed = clean_dataset["Current Credit Balance"]
-#------Length of credit history (15%)-------------
-credit_history = clean_dataset["Years of Credit History"]
-# ---------Credit mix (10%) or New Credit(10%)------------
-minor4_score = accounts
 
 ####----GENERATING SCORES----####
 #To display values in 2 decimal places
 pd.options.display.float_format = '{:.2f}'.format
 
-#1.Payment History
+#1.PAYMENT HISTORY
+# 1( Loan Amount , Credit balance) How many payments made
 loan_amount = clean_dataset["Current Loan Amount"]
-payment = loan_amount + account_owed
-calc_value = payment / first_value
+monthly_debt = clean_dataset["Monthly Debt"]
+calc_value = loan_amount / monthly_debt
 # print(calc_value)
-
-# print(years)
-#Job years years = 1 point
+#1.a Years of Credit History 1yr= 1point
+years_ch = clean_dataset["Years of Credit History"]
+#1.b Job years years = 1 point
 job = clean_dataset["Years in current job"]
-minor1_score = calc_value + accounts + second_value + job
+#1.c Accounts: Types of accounts considered for credit payment history
+accounts = clean_dataset["Number of Open Accounts"]
+#1.d The amount of time that's passed since delinquencies.
+delinquent = clean_dataset['Months since last delinquent']
 
 #FINAL SCORE FOR PAYMENT HISTORY
+minor1_score = calc_value + accounts + years_ch + job + delinquent
 final_minor1_score=round(minor1_score, 2)
 # print(final_minor1_score)
 
-#2. Accounts Owed
-value1 = account_owed 
+#2. AMOUNTS OWED
+value1 = clean_dataset["Current Credit Balance"]
 value2 = clean_dataset["Maximum Open Credit"]
-value3 = clean_dataset["Current Credit Balance"]
-p_borrow = (value3 / value2) 
+p_borrow = (value1 / value2) 
+# 30% of 850 = 255
 score2 = 255 * (1 - p_borrow) 
 # print(score2)
 #FINAL SCORE FOR ACCOUNTS OWED
@@ -63,7 +53,7 @@ final_minor2_score = score2
 # print(final_minor2_score)
 
 
-#3. Length of Credit History
+#3. LENGTH OF CREDIT HISTORY
 #Ignore delinquent above 84
 deduct_delinquent = clean_dataset[clean_dataset["Months since last delinquent"] <= 84 ] 
 deducted = deduct_delinquent["Months since last delinquent"] * 1.54
@@ -72,15 +62,16 @@ added = deducted.replace(0, 127.5)
 # print(added)
 final_delinquent = deducted + added
 # print(final_delinquent)
-#FINAL SCORE FOR LENGTH OF CREDIT HISTORY
 #1.2 Years of credit history converted to points 1yr=2.67
-years = second_value * 2.67
+
+#FINAL SCORE FOR LENGTH OF CREDIT HISTORY
+years = years_ch * 2.67
 final_minor3_score = years + final_delinquent
 
-#4 New credit or Credit Mix
+#4 NEW CREDIT / CREDIT MIS
 final_minor4_score = accounts 
 
-#5 Standard Starting Credit Score 
+#5 STARTING SCORE
 starting_score = 300
 
 #Total of all scores
@@ -90,9 +81,9 @@ format_Credit_score = round(Credit_score)
 # exceptional_score = (format_Credit_score <= 739) & (format_Credit_score >= 670)
 # print(exceptional_score)  
 
-###-----ADDING NEW COLUMNS WITH CALCULATED VALUES TO CSV-----###
-# dataset["Score"] = format_Credit_score
-# dataset.to_csv("data/credit_train.csv", index=False)
+##-----ADDING NEW COLUMNS WITH CALCULATED VALUES TO CSV-----###
+dataset["Score"] = format_Credit_score
+dataset.to_csv("data/new_credit_train.csv", index=False)
 
 
 # ####-----REPLACE NaN VALUES WITH 0-----####
