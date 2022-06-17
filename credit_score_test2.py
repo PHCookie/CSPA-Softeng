@@ -62,7 +62,7 @@ exceptional_id = exceptional_score["Customer ID"]
 # print("Number of Customers:",len(exceptional))
 # print("Total:",len(exceptional) + len(verygood) + len(good) + len(fair) + len(poor) )
 
-##-----LOAN STATUS BAR-----##
+# #-----LOAN STATUS BAR-----##
 # coffvalue = score_range[score_range['Loan'] == 0]['Loan'].count()
 # fpaidvalue = score_range[score_range['Loan'] == 1]['Loan'].count()
 # data = {"Counts":[coffvalue, fpaidvalue] }
@@ -70,38 +70,38 @@ exceptional_id = exceptional_score["Customer ID"]
 # statusDF.plot(kind='bar', title="Status of the Loan")
 # plt.show()
 
-##-----BAR CHART-----#####
-# Category = ['Poor','Fair','Good','Very Good','Exceptional']
-# Number_of_Customer = [len(poor),len(fair),len(good),len(verygood),len(exceptional)]
+#-----BAR CHART-----#####
+Category = ['Poor','Fair','Good','Very Good','Exceptional']
+Number_of_Customer = [len(poor),len(fair),len(good),len(verygood),len(exceptional)]
 
-# plt.bar(Category, Number_of_Customer)
-# plt.title('Credit Scores Categorization')
-# plt.xlabel('Category')
-# plt.ylabel('Number of Customer')
-# plt.show()
+plt.bar(Category, Number_of_Customer)
+plt.title('Credit Scores Categorization')
+plt.xlabel('Category')
+plt.ylabel('Number of Customer')
+plt.show()
 
-#-----DECISION TREE ALGORITHM---###
-#Converting scores from float to integer
-y_cols = score_range["Loan"]
-x_cols = ['Current Loan Amount', 'Years in current job', 'Monthly Debt','Years of Credit History', 'Months since last delinquent','Number of Open Accounts', 'Current Credit Balance', 'Maximum Open Credit']
+# #-----DECISION TREE ALGORITHM---###
+# #Converting scores from float to integer
+# y_cols = score_range["Loan"]
+# x_cols = ['Current Loan Amount', 'Years in current job', 'Monthly Debt','Years of Credit History', 'Months since last delinquent','Number of Open Accounts', 'Current Credit Balance', 'Maximum Open Credit']
 
-X = score_range[x_cols]# Features
-y = y_cols # Target variable
+# X = score_range[x_cols]# Features
+# y = y_cols # Target variable
 
-#Split dataset into training set and test set
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=1) # 70% training and 30% test
+# #Split dataset into training set and test set
+# X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=1) # 70% training and 30% test
 
-# Create Decision Tree classifer object
-clf = DecisionTreeClassifier(criterion="entropy", max_depth=3)
+# # Create Decision Tree classifer object
+# clf = DecisionTreeClassifier(criterion="entropy", max_depth=3)
 
-# Train Decision Tree Classifer
-clf = clf.fit(X_train,y_train)
+# # Train Decision Tree Classifer
+# clf = clf.fit(X_train,y_train)
 
-#Predict the response for test dataset
-y_pred = clf.predict(X_test)
+# #Predict the response for test dataset
+# y_pred = clf.predict(X_test)
 
-# Model Accuracy, how often is the classifier correct?
-print("Accuracy:",metrics.accuracy_score(y_test, y_pred))
+# # Model Accuracy, how often is the classifier correct?
+# print("Accuracy:",metrics.accuracy_score(y_test, y_pred))
 
 # #Libraries for graphing
 # from sklearn.tree import export_graphviz 
