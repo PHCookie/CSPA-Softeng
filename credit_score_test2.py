@@ -20,6 +20,7 @@ df= df.fillna(0)
 filter_score = df[df["Score"] > 0]
 score_range = filter_score[(filter_score["Score"] > 0) & (filter_score["Score"] <= 850)] 
 
+
 #####-----CATEGORIZING SCORES-----#####
 #1. Poor Credit Scores
 poor_score = filter_score[(filter_score["Score"] > 0) & (filter_score["Score"] < 400)]  
@@ -64,18 +65,18 @@ Total = len(exceptional) + len(verygood) + len(good) + len(fair) + len(poor)
 # print("Total", Total)
 
 
-Poor_percentage = (len(poor) / Total) * 100
-print("Poor Percentage:", round(Poor_percentage, 2))
-Fair_percentage = (len(fair) / Total) * 100
-print("Fair Percentage:", round(Fair_percentage, 2))
-Good_percentage = (len(good) / Total) * 100
-print("Good Percentage:", round(Good_percentage, 2))
-VGood_percentage = (len(verygood) / Total) * 100
-print("Very Good Percentage:", round(VGood_percentage, 2))
-Exceptional_percentage = (len(exceptional) / Total) * 100
-print("Exceptional Percentage:", round(Exceptional_percentage, 2))
+# Poor_percentage = (len(poor) / Total) * 100
+# print("Poor Percentage:", round(Poor_percentage, 2))
+# Fair_percentage = (len(fair) / Total) * 100
+# print("Fair Percentage:", round(Fair_percentage, 2))
+# Good_percentage = (len(good) / Total) * 100
+# print("Good Percentage:", round(Good_percentage, 2))
+# VGood_percentage = (len(verygood) / Total) * 100
+# print("Very Good Percentage:", round(VGood_percentage, 2))
+# Exceptional_percentage = (len(exceptional) / Total) * 100
+# print("Exceptional Percentage:", round(Exceptional_percentage, 2))
 
-# #-----LOAN STATUS BAR-----##
+# # #-----LOAN STATUS BAR-----##
 # coffvalue = score_range[score_range['Loan'] == 0]['Loan'].count()
 # fpaidvalue = score_range[score_range['Loan'] == 1]['Loan'].count()
 # data = {"Counts":[coffvalue, fpaidvalue] }
@@ -84,17 +85,17 @@ print("Exceptional Percentage:", round(Exceptional_percentage, 2))
 # plt.show()
 
 #-----BAR CHART-----#####
-Category = ['Poor','Fair','Good','Very Good','Exceptional']
-Number_of_Customer = [len(poor), len(fair), len(good), len(verygood),len(exceptional)]
+# Category = ['Poor','Fair','Good','Very Good','Exceptional']
+# Number_of_Customer = [len(poor), len(fair), len(good), len(verygood),len(exceptional)]
 
-plt.bar(Category, Number_of_Customer)
-plt.title('Credit Scores Categorization')
-plt.xlabel('Category')
-plt.ylabel('Number of Customer')
-plt.show()
+# plt.bar(Category, Number_of_Customer)
+# plt.title('Credit Scores Categorization')
+# plt.xlabel('Category')
+# plt.ylabel('Number of Customer')
+# plt.show()
 
-# #-----DECISION TREE ALGORITHM---###
-# #Converting scores from float to integer
+###-----DECISION TREE ALGORITHM---###
+#Converting scores from float to integer
 # y_cols = score_range["Loan"]
 # x_cols = ['Current Loan Amount', 'Years in current job', 'Monthly Debt','Years of Credit History', 'Months since last delinquent','Number of Open Accounts', 'Current Credit Balance', 'Maximum Open Credit']
 
