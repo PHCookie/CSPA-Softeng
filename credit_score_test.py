@@ -15,7 +15,7 @@ dataset = pd.read_csv('data/credit_train.csv')
 clean_dataset = dataset[dataset["Current Loan Amount"] < 99999999 ]
 #to display all values
 pd.set_option("display.max_rows", None, "display.max_columns", None)
-
+# print(len(clean_dataset))
 
 ####----GENERATING SCORES----####
 #To display values in 2 decimal places
@@ -39,12 +39,13 @@ delinquent = clean_dataset['Months since last delinquent']
 #FINAL SCORE FOR PAYMENT HISTORY
 minor1_score = calc_value + accounts + years_ch + job + delinquent
 final_minor1_score=round(minor1_score, 2)
-# print(final_minor1_score)
+print(final_minor1_score)
 
 #2. AMOUNTS OWED
 value1 = clean_dataset["Current Credit Balance"]
 value2 = clean_dataset["Maximum Open Credit"]
 p_borrow = (value1 / value2) 
+# print(p_borrow)
 # 30% of 850 = 255
 score2 = 255 * (1 - p_borrow) 
 # print(score2)
@@ -88,53 +89,53 @@ format_Credit_score = round(Credit_score)
 # ####-----REPLACE NaN VALUES WITH 0-----####
 # dataset= dataset.fillna(0)
 
-# ####-----FILTER CREDIT SCORES BETWEEN 0 - 850-----#####
-filter_score = dataset[dataset["Score"] > 0]
-score_range = filter_score[(filter_score["Score"] > 0) & (filter_score["Score"] <= 850)] 
+# ####-----FILTER CREDIT SCORES BETWEEN 1 - 850-----#####
+# filter_score = dataset[dataset["Score"] > 0]
+# score_range = filter_score[(filter_score["Score"] > 0) & (filter_score["Score"] <= 850)] 
 
 
-# #####-----CATEGORIZING SCORES-----#####
-#1. Poor Credit Scores
-poor_score = filter_score[(filter_score["Score"] > 0) & (filter_score["Score"] < 400)]  
-poor = poor_score["Score"]
-poor_id = poor_score["Customer ID"]
-print("POOR CREDIT SCORES:")
-# # print(poor)
-print("Number of Customers:",len(poor))
+# # #####-----CATEGORIZING SCORES-----#####
+# #1. Poor Credit Scores
+# poor_score = filter_score[(filter_score["Score"] > 0) & (filter_score["Score"] < 400)]  
+# poor = poor_score["Score"]
+# poor_id = poor_score["Customer ID"]
+# print("POOR CREDIT SCORES:")
+# # # print(poor)
+# print("Number of Customers:",len(poor))
 
-#2. Fair Credit Scores
-fair_score = filter_score[(filter_score["Score"] >= 400) & (filter_score["Score"] <= 570)]  
-fair = fair_score["Score"]
-fair_id = fair_score["Customer ID"]
-print("FAIR CREDIT SCORES:")
-# print(fair)
-print("Number of Customers:",len(fair))
+# #2. Fair Credit Scores
+# fair_score = filter_score[(filter_score["Score"] >= 400) & (filter_score["Score"] <= 570)]  
+# fair = fair_score["Score"]
+# fair_id = fair_score["Customer ID"]
+# print("FAIR CREDIT SCORES:")
+# # print(fair)
+# print("Number of Customers:",len(fair))
 
-#3. Good Credit Scores
-good_score = filter_score[(filter_score["Score"] >= 571) & (filter_score["Score"] <= 730)]  
-good = good_score["Score"]
-good_id = good_score["Customer ID"]
-print("GOOD CREDIT SCORES:")
-#print(good)
-print("Number of Customers:",len(good))
+# #3. Good Credit Scores
+# good_score = filter_score[(filter_score["Score"] >= 571) & (filter_score["Score"] <= 730)]  
+# good = good_score["Score"]
+# good_id = good_score["Customer ID"]
+# print("GOOD CREDIT SCORES:")
+# #print(good)
+# print("Number of Customers:",len(good))
 
-#4. VERY GOOD Credit Scores
-verygood_score = filter_score[(filter_score["Score"] >= 731) & (filter_score["Score"] <= 830)]  
-verygood = verygood_score["Score"]
-verygood_id = verygood_score["Customer ID"]
-print("VERY GOOD CREDIT SCORES:")
-# print(verygood)
-print("Number of Customers:",len(verygood))
+# #4. VERY GOOD Credit Scores
+# verygood_score = filter_score[(filter_score["Score"] >= 731) & (filter_score["Score"] <= 830)]  
+# verygood = verygood_score["Score"]
+# verygood_id = verygood_score["Customer ID"]
+# print("VERY GOOD CREDIT SCORES:")
+# # print(verygood)
+# print("Number of Customers:",len(verygood))
 
-#5. Exceptional Credit Scores
-exceptional_score = filter_score[(filter_score["Score"] >= 831) & (filter_score["Score"] <= 850)]  
-exceptional = exceptional_score["Score"]
-exceptional_id = exceptional_score["Customer ID"]
-print("EXCEPTIONAL CREDIT SCORES:")
-# print(exceptional)
-print("Number of Customers:",len(exceptional))
-Total = len(exceptional) + len(verygood) + len(good) + len(fair) + len(poor)
-print("Total", Total)
+# #5. Exceptional Credit Scores
+# exceptional_score = filter_score[(filter_score["Score"] >= 831) & (filter_score["Score"] <= 850)]  
+# exceptional = exceptional_score["Score"]
+# exceptional_id = exceptional_score["Customer ID"]
+# print("EXCEPTIONAL CREDIT SCORES:")
+# # print(exceptional)
+# print("Number of Customers:",len(exceptional))
+# Total = len(exceptional) + len(verygood) + len(good) + len(fair) + len(poor)
+# print("Total", Total)
 
 # #-----BAR CHART-----#####
 # Category = ['Poor','Fair','Good','Very Good','Exceptional']
@@ -147,6 +148,7 @@ print("Total", Total)
 # plt.show()
 
 # #-----LOAN STATUS BAR-----##
+#Counting 1 and O
 # coffvalue = score_range[score_range['Loan'] == 0]['Loan'].count()
 # fpaidvalue = score_range[score_range['Loan'] == 1]['Loan'].count()
 # data = {"Counts":[coffvalue, fpaidvalue] }
@@ -155,7 +157,7 @@ print("Total", Total)
 # plt.show()
 
 #-----DECISION TREE ALGORITHM---###
-#Converting scores from float to integer
+#Assigning columns for x and y
 # y_cols = score_range["Loan"]
 # x_cols = ['Current Loan Amount', 'Years in current job', 'Monthly Debt','Years of Credit History', 'Months since last delinquent','Number of Open Accounts', 'Current Credit Balance', 'Maximum Open Credit']
 

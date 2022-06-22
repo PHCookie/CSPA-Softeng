@@ -26,33 +26,33 @@ score_range = filter_score[(filter_score["Score"] > 0) & (filter_score["Score"] 
 poor_score = filter_score[(filter_score["Score"] > 0) & (filter_score["Score"] < 400)]  
 poor = poor_score["Score"]
 poor_id = poor_score["Customer ID"]
-# print("POOR CREDIT SCORES:")
+print("POOR CREDIT SCORES:")
 # # print(poor)
-# print("Number of Customers:",len(poor))
+print("Number of Customers:",len(poor))
 
 #2. Fair Credit Scores
 fair_score = filter_score[(filter_score["Score"] >= 400) & (filter_score["Score"] <= 570)]  
 fair = fair_score["Score"]
 fair_id = fair_score["Customer ID"]
-# print("FAIR CREDIT SCORES:")
+print("FAIR CREDIT SCORES:")
 # # # print(fair)
-# print("Number of Customers:",len(fair))
+print("Number of Customers:",len(fair))
 
 #3. Good Credit Scores
 good_score = filter_score[(filter_score["Score"] >= 571) & (filter_score["Score"] <= 730)]  
 good = good_score["Score"]
 good_id = good_score["Customer ID"]
-# print("GOOD CREDIT SCORES:")
+print("GOOD CREDIT SCORES:")
 # # # print(good)
-# print("Number of Customers:",len(good))
+print("Number of Customers:",len(good))
 
 #4. VERY GOOD Credit Scores
 verygood_score = filter_score[(filter_score["Score"] >= 731) & (filter_score["Score"] <= 830)]  
 verygood = verygood_score["Score"]
 verygood_id = verygood_score["Customer ID"]
-# print("VERY GOOD CREDIT SCORES:")
+print("VERY GOOD CREDIT SCORES:")
 # # # print(verygood)
-# print("Number of Customers:",len(verygood))
+print("Number of Customers:",len(verygood))
 
 #5. Exceptional Credit Scores
 exceptional_score = filter_score[(filter_score["Score"] >= 831) & (filter_score["Score"] <= 850)]  
@@ -60,9 +60,9 @@ exceptional = exceptional_score["Score"]
 exceptional_id = exceptional_score["Customer ID"]
 # print("EXCEPTIONAL CREDIT SCORES:")
 # print(exceptional)
-# print("Number of Customers:",len(exceptional))
+print("Number of Customers:",len(exceptional))
 Total = len(exceptional) + len(verygood) + len(good) + len(fair) + len(poor)
-# print("Total", Total)
+print("Total", Total)
 
 
 # Poor_percentage = (len(poor) / Total) * 100
