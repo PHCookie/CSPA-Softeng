@@ -12,9 +12,17 @@ from sklearn import metrics #Import scikit-learn metrics module for accuracy cal
 # Columns: Loan ID,Customer ID,Loan Status,Current Loan Amount,Term,Credit Score,Annual Income,Years in current job,Home Ownership,Purpose,Monthly Debt,Years of Credit History,Months since last delinquent,Number of Open Accounts,Number of Credit Problems,Current Credit Balance,Maximum Open Credit,Bankruptcies,Tax Liens
 dataset = pd.read_csv('data/credit_train.csv')
 #Remove unwanted values "999999999"
-clean_dataset = dataset[dataset["Current Loan Amount"] < 99999999 ]
+df = dataset[dataset["Current Loan Amount"] < 99999999 ]
+
+#- --> not checked yet <---
+# drop all empty credit scores 
+df = df[df['Credit Score'].notna()]
+#drop all duplicates
+clean_dataset = df.drop_duplicates(subset='Customer ID')
+clean_dataset.dropna(thresh = clean_dataset.shape[0]*0.2, how = 'all', axis = 1, inplace = True)
+
 #to display all values
-pd.set_option("display.max_rows", None, "display.max_columns", None)
+pd.set_option("display.max_rows", None, "display.max_columns", None)  #btw is this supposed to be for pd or "clean_dataset"?
 # print(len(clean_dataset))
 
 ####----GENERATING SCORES----####
