@@ -7,23 +7,78 @@ import matplotlib.pyplot as plt
 from sklearn.tree import DecisionTreeClassifier # Import Decision Tree Classifier
 from sklearn.model_selection import train_test_split # Import train_test_split function
 from sklearn import metrics #Import scikit-learn metrics module for accuracy calculation
+#Color Text
+import colorama
+from colorama import Back, Fore, Style
+
+#-------------------INTRODUCTION--------------------#
+colorama.init(autoreset=True)
+#A. Header
+print(Back.BLACK +"|--------------------WELCOME TO--------------------|")
+print(Back.BLACK +f"|-----------------------{Fore.RED}C{Fore.BLUE}S{Fore.CYAN}P{Fore.GREEN}A-{Fore.WHITE}----------------------|")
+print(Back.BLACK +"|---------------------ALGORITHM--------------------|")
+print(Back.BLACK +"|--------------------------------------------------|")
+print(Back.BLACK +f"|{Fore.GREEN}By: CS Warriors{Fore.WHITE}-----------------------------------|")
+print("\n")
+
+#B. Loading Program Progress Bar
+
+def progress_bar(progress, total, color = colorama.Fore.GREEN):
+    percent = 100 * (progress/ float(total))
+    bar = '▰' * int(percent) + '-' * (100 - int(percent))
+    print(color + f"\r|{bar}| {percent:.3f}%", end="\r")
+
+print("Loading Program :")
+numbers = [x * 5 for x in range(1000, 2000)]
+results = []
+
+progress_bar(0, len(numbers))
+for i, x in enumerate(numbers):
+    results.append(math.factorial(x))
+    progress_bar(i+1,len(numbers))
+print("\nLoading Program : DONE\n")
+
+#C. Importing Dataset Progress Bar
+print("Importing Data:")
+
+numbers2 = [x * 5 for x in range(2000, 3000)]
+results2 = []
+
+progress_bar(0, len(numbers2))
+for j, y in enumerate(numbers2):
+    results2.append(math.factorial(y))
+    progress_bar(j+1,len(numbers2))
+print("\nImporting Data: DONE\n")
+
+#D. Options to command
+print(Fore.GREEN +"|---------------------SUCCESSFULLY LOADED--------------------|")
+print("\n\nPLEASE CHOOSE AN OPTION!")
+print(f"\n\n{Fore.GREEN}[A] {Fore.WHITE}View Customer Loan Info.")
+print(f"\n{Fore.GREEN}[B] {Fore.WHITE} Show Credit Score.")
+print(f"\n{Fore.GREEN}[C] {Fore.WHITE} Check Credit Score Bar Graph.")
+print(f"\n{Fore.GREEN}[D] {Fore.WHITE} View Decision Tree.")
+print(f"\n{Fore.GREEN}[E] {Fore.WHITE} About the CSPA.")
+print(f"\n{Fore.RED}[F] {Fore.WHITE} Exit.")
+
+#-------------------END OF INTRODUCTION-------------#
 
 ###-----CLEANING/ORGANIZING DATASET-----###
-# Columns: Loan ID,Customer ID,Loan Status,Current Loan Amount,Term,Credit Score,Annual Income,Years in current job,Home Ownership,Purpose,Monthly Debt,Years of Credit History,Months since last delinquent,Number of Open Accounts,Number of Credit Problems,Current Credit Balance,Maximum Open Credit,Bankruptcies,Tax Liens
-dataset = pd.read_csv('data/credit_train.csv')
+# Columns: Customer ID,Current Loan Amount,Annual Income,Years in current job,Monthly Debt,Years of Credit History,Months since last delinquent,Number of Open Accounts,Number of Credit Problems,Current Credit Balance,Maximum Open Credit.
+dataset = pd.read_csv('data/testsmalldata/shortcredit_train.csv')
 #Remove unwanted values "999999999"
 df = dataset[dataset["Current Loan Amount"] < 99999999 ]
 
 #- --> not checked yet <---
 # drop all empty credit scores 
-df = df[df['Credit Score'].notna()]
+# df = df[df['Credit Score'].notna()]
+
 #drop all duplicates
 clean_dataset = df.drop_duplicates(subset='Customer ID')
-clean_dataset.dropna(thresh = clean_dataset.shape[0]*0.2, how = 'all', axis = 1, inplace = True)
+# clean_dataset.dropna(thresh = clean_dataset.shape[0]*0.2, how = 'all', axis = 1, inplace = True)
 
 #to display all values
-pd.set_option("display.max_rows", None, "display.max_columns", None)  #btw is this supposed to be for pd or "clean_dataset"?
-# print(len(clean_dataset))
+# pd.set_option("display.max_rows", None, "display.max_columns", None)  #btw is this supposed to be for pd or "clean_dataset"?
+# print(clean_dataset)
 
 ####----GENERATING SCORES----####
 #To display values in 2 decimal places
@@ -47,7 +102,7 @@ delinquent = clean_dataset['Months since last delinquent']
 #FINAL SCORE FOR PAYMENT HISTORY
 minor1_score = calc_value + accounts + years_ch + job + delinquent
 final_minor1_score=round(minor1_score, 2)
-print(final_minor1_score)
+# print(final_minor1_score)
 
 #2. AMOUNTS OWED
 value1 = clean_dataset["Current Credit Balance"]

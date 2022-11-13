@@ -1,10 +1,15 @@
-Required Python Modules:
+ Required Python Modules:
     pip install numpy
     pip install pandas
     pip install pillow
     pip install graphviz
     pip install pydotplus
     pip install regex
+    pip install scikit-learn
+    pip install matplotlib
+
+    #Text Design
+    pip install colorama
 
 # to avoid sklearn.externals.six incompatibility
     from six import StringIO
@@ -14,4 +19,4 @@ then add this line
     os.environ["PATH"] += os.pathsep + 'C:\Program Files\Graphviz/bin/'
 
 Dataset attribute
-1. Loan: "Loan Status" ;1 = Fully Paid & 0 = Charged Off
+
