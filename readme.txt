@@ -10,6 +10,7 @@
 
     #Text Design
     pip install colorama
+    pip install pandas-datareader
 
 # to avoid sklearn.externals.six incompatibility
     from six import StringIO

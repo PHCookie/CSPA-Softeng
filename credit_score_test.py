@@ -11,6 +11,7 @@ from sklearn import metrics #Import scikit-learn metrics module for accuracy cal
 import colorama
 from colorama import Back, Fore, Style
 
+
 #-------------------INTRODUCTION--------------------#
 colorama.init(autoreset=True)
 #A. Header
@@ -22,7 +23,6 @@ print(Back.BLACK +f"|{Fore.GREEN}By: CS Warriors{Fore.WHITE}--------------------
 print("\n")
 
 #B. Loading Program Progress Bar
-
 def progress_bar(progress, total, color = colorama.Fore.GREEN):
     percent = 100 * (progress/ float(total))
     bar = '▰' * int(percent) + '-' * (100 - int(percent))
@@ -38,7 +38,7 @@ for i, x in enumerate(numbers):
     progress_bar(i+1,len(numbers))
 print("\nLoading Program : DONE\n")
 
-#C. Importing Dataset Progress Bar
+#B.1 Importing Dataset Progress Bar
 print("Importing Data:")
 
 numbers2 = [x * 5 for x in range(2000, 3000)]
@@ -50,15 +50,61 @@ for j, y in enumerate(numbers2):
     progress_bar(j+1,len(numbers2))
 print("\nImporting Data: DONE\n")
 
-#D. Options to command
-print(Fore.GREEN +"|---------------------SUCCESSFULLY LOADED--------------------|")
-print("\n\nPLEASE CHOOSE AN OPTION!")
-print(f"\n\n{Fore.GREEN}[A] {Fore.WHITE}View Customer Loan Info.")
-print(f"\n{Fore.GREEN}[B] {Fore.WHITE} Show Credit Score.")
-print(f"\n{Fore.GREEN}[C] {Fore.WHITE} Check Credit Score Bar Graph.")
-print(f"\n{Fore.GREEN}[D] {Fore.WHITE} View Decision Tree.")
-print(f"\n{Fore.GREEN}[E] {Fore.WHITE} About the CSPA.")
-print(f"\n{Fore.RED}[F] {Fore.WHITE} Exit.")
+#C. Options listto command
+def options_list():
+    print(Fore.GREEN +"|---------------------SUCCESSFULLY LOADED--------------------|")
+    print("\n\nPLEASE CHOOSE AN OPTION!")
+    print(f"\n\n{Fore.GREEN}[A] {Fore.WHITE}View Customer Loan Info.")
+    print(f"\n{Fore.GREEN}[B] {Fore.WHITE} Show Credit Score.")
+    print(f"\n{Fore.GREEN}[C] {Fore.WHITE} Check Credit Score Bar Graph.")
+    print(f"\n{Fore.GREEN}[D] {Fore.WHITE} View Decision Tree.")
+    print(f"\n{Fore.GREEN}[E] {Fore.WHITE} About the CSPA.")
+    print(f"\n{Fore.RED}[F] {Fore.WHITE} Exit.")
+
+options_list()
+
+#C.1 Ask for option and validate if valid input or not (Should be at the end)
+while True:
+    try:
+        input1 = input("\nSelect Option:") 
+
+        if input1 == "A":
+            print(f"\n{Fore.GREEN}You've Choosen option A")
+            break
+        elif input1 == "B":
+            print(f"\n{Fore.GREEN}You've Choosen option B")
+            break
+        elif input1 == "C":
+            print(f"\n{Fore.GREEN}You've Choosen option C")
+            break
+        elif input1 == "D":
+            print(f"\n{Fore.GREEN}You've Choosen option D")
+            break
+        elif input1 == "E":
+            print(f"\n{Fore.GREEN}You've Choosen option E")
+            break
+        elif input1 == "F":
+            print(f"\n{Fore.GREEN}You've Choosen option F")
+            exitinput = input("\nAre you sure you want to exit? (Y/N):") 
+            if exitinput == "N":
+                print(f"\n{Fore.GREEN}Returning...\n\n")
+                options_list()
+                continue
+            else:
+                break
+        #C.1.a IF outside the options, then ask again
+        else:
+            input1 != "A" or "B" or "C" or "D" or "E" or "F"
+            print(f"\n{Fore.RED}Input is invalid.{Fore.GREEN} Please only choose on the options provided.")
+            continue
+    except:
+        continue
+
+#C.2 For option F to exit, separated to avoid exit loop
+if exitinput == "Y":
+    exit()
+
+    
 
 #-------------------END OF INTRODUCTION-------------#
 
