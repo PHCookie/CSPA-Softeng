@@ -11,6 +11,7 @@
     #Text Design
     pip install colorama
     pip install pandas-datareader
+    pip install alive-progress or alive-bar
 
 # to avoid sklearn.externals.six incompatibility
     from six import StringIO
