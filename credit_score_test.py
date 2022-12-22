@@ -13,19 +13,44 @@ from colorama import Back, Fore, Style
 #Progress Bars
 from alive_progress import alive_bar
 import time
+#Delay output
+from time import sleep
 
-#-------------------INTRODUCTION--------------------#
+########-----OPTIONS LIST-----########
+def options_list():
+    print("\n\nPLEASE CHOOSE AN OPTION!")
+    print(f"\n\n{Fore.GREEN}[A] {Fore.WHITE}View Customer Loan Info.")
+    print(f"\n{Fore.GREEN}[B] {Fore.WHITE}Show Credit Score.")
+    print(f"\n{Fore.GREEN}[C] {Fore.WHITE}Check Credit Score Bar Graph.")
+    print(f"\n{Fore.GREEN}[D] {Fore.WHITE}View Decision Tree.")
+    print(f"\n{Fore.GREEN}[E] {Fore.WHITE}About the CSPA.")
+    print(f"\n{Fore.RED}[F] {Fore.WHITE}Exit.")
+########-----END OF OPTIONS LIST-----########
+
+
+########-----LOAN  BAR CHART-----######## (NOT CHECKED)
+def bar_chart():
+    Category = ['Poor','Fair','Good','Very Good','Exceptional']
+    Number_of_Customer = [len(poor), len(fair), len(good), len(verygood),len(exceptional)]
+    plt.bar(Category, Number_of_Customer)
+    plt.title('Credit Scores Categorization')
+    plt.xlabel('Category')
+    plt.ylabel('Number of Customer')
+    plt.show()
+#######-----------END OF BAR CHART-----------########
+
+#######-----------HEADER---------------########
 colorama.init(autoreset=True)
-#A. Header
 print(Back.BLACK +"|--------------------WELCOME TO--------------------|")
 print(Back.BLACK +f"|-----------------------{Fore.RED}C{Fore.BLUE}S{Fore.CYAN}P{Fore.GREEN}A-{Fore.WHITE}----------------------|")
 print(Back.BLACK +"|---------------------ALGORITHM--------------------|")
 print(Back.BLACK +"|--------------------------------------------------|")
 print(Back.BLACK +f"|{Fore.GREEN}By: CS Warriors{Fore.WHITE}-----------------------------------|")
 print("\n")
+#######-----------END OF HEADER---------------########
 
-#B. Loading Program Progress Bar
-
+#######-----------LOADING PROGRESS BAR--------########
+#A. LOADING BAR
 print("Loading Program :\n")
 with alive_bar(100) as bar:
     for i in range(100):
@@ -40,10 +65,8 @@ with alive_bar(100) as bar:
             print(f"{Fore.GREEN}[100%]{Fore.WHITE}Program Successfully Loaded")
         bar()
 
+#B. IMPORTING DATASET LOADING BAR
 print("\nImporting Dataset :\n")
-
-
-
 with alive_bar(100) as bar:
     for x in range(100):
         time.sleep(.090)
@@ -146,10 +169,10 @@ with alive_bar(100) as bar:
 
             print(f"{Fore.GREEN}[100%]{Fore.WHITE}Dataset Successfully loaded")
         bar()
-
 print(Fore.GREEN +"\n\n|---------------------SUCCESSFULLY LOADED--------------------|")
+#######-----------END OF LOADING PROGRESS BAR--------########
 
-#C. #####-----CATEGORIZING SCORES-----#####
+#######-----------SCORE CATEGORIZATION---------------########
 #Filter  Credit Scores Greater than 0 and less than 850.(FICO score range)
 filter_score = newDF[newDF["Score"] > 0]
 score_range = filter_score[(filter_score["Score"] > 0) & (filter_score["Score"] <= 850)] 
@@ -195,27 +218,10 @@ exceptional_id = exceptional_score["Customer_ID"]
 # print("Number of Customers:",len(exceptional))
 Total = len(exceptional) + len(verygood) + len(good) + len(fair) + len(poor)
 # print("Total", Total)
+#######-----------END OF SCORE CATEGORIZATION---------------########
 
-#E.########-----LOAN STATUS BAR and BAR CHART-----######## (NOT CHECKED)
-# #-----LOAN STATUS BAR-----#
-# coffvalue = score_range[score_range['Loan'] == 0]['Loan'].count()
-# fpaidvalue = score_range[score_range['Loan'] == 1]['Loan'].count()
-# data = {"Counts":[coffvalue, fpaidvalue] }
-# statusDF = pd.DataFrame(data, index=["Charged Off", "Fully Paid"])
-# statusDF.plot(kind='bar', title="Status of the Loan")
-# plt.show()
 
-# #-----BAR CHART-----#
-# Category = ['Poor','Fair','Good','Very Good','Exceptional']
-# Number_of_Customer = [len(poor), len(fair), len(good), len(verygood),len(exceptional)]
-
-# plt.bar(Category, Number_of_Customer)
-# plt.title('Credit Scores Categorization')
-# plt.xlabel('Category')
-# plt.ylabel('Number of Customer')
-# plt.show()
-
-#F.###-----DECISION TREE ALGORITHM---###
+#F.###----------------------------DECISION TREE ALGORITHM--------------------###
 #Converting scores from float to integer
 # y_cols = score_range["Loan"]
 # x_cols = ['Current Loan Amount', 'Years in current job', 'Monthly Debt','Years of Credit History', 'Months since last delinquent','Number of Open Accounts', 'Current Credit Balance', 'Maximum Open Credit']
@@ -253,17 +259,9 @@ Total = len(exceptional) + len(verygood) + len(good) + len(fair) + len(poor)
 # graph = pydotplus.graph_from_dot_data(dot_data.getvalue())  
 # graph.write_png('dtm.png')
 # Image(graph.create_png())
+#########---------------------END OF DECISION TREE----------------------##################
 
 #G. Options list to command
-def options_list():
-    print("\n\nPLEASE CHOOSE AN OPTION!")
-    print(f"\n\n{Fore.GREEN}[A] {Fore.WHITE}View Customer Loan Info.")
-    print(f"\n{Fore.GREEN}[B] {Fore.WHITE}Show Credit Score.")
-    print(f"\n{Fore.GREEN}[C] {Fore.WHITE}Check Credit Score Bar Graph.")
-    print(f"\n{Fore.GREEN}[D] {Fore.WHITE}View Decision Tree.")
-    print(f"\n{Fore.GREEN}[E] {Fore.WHITE}About the CSPA.")
-    print(f"\n{Fore.RED}[F] {Fore.WHITE}Exit.")
-#display options list
 options_list()
 
 #H Ask for option and validate if valid input or not (Should be at the end)
@@ -277,9 +275,14 @@ while True:
         elif input1 == "B":
             print(f"\n{Fore.GREEN}You've Choosen option B")
             break
-        elif input1 == "C":
+        elif input1 == "C": 
+            ###---BAR CHART OPTION---###
             print(f"\n{Fore.GREEN}You've Choosen option C")
-            break
+            bar_chart()
+            print(f"\n{Fore.GREEN}Graph Exited. Returning...\n\n")
+            sleep(1.75)
+            options_list()
+            continue
         elif input1 == "D":
             print(f"\n{Fore.GREEN}You've Choosen option D")
             break
@@ -288,18 +291,21 @@ while True:
             break
         elif input1 == "F":
             print(f"\n{Fore.GREEN}You've Choosen option F")
-            exitinput = input("\nAre you sure you want to exit? (Y/N):") 
-            if exitinput == "N":
+            exitinputF = input("\nAre you sure you want to exit? (Y/N):") 
+            if exitinputF == "N":
                 print(f"\n{Fore.GREEN}Returning...\n\n")
                 options_list()
                 continue
-            else:
+            elif exitinputF == "Y":
                 print(f"\n{Fore.RED}Closing...\n\n")
+                break
+            else:
+                print(f"\n{Fore.RED}Invalid input, terminating program..\n\n")
                 break
         #H.1 IF outside the options, then ask again
         else:
             input1 != "A" or "B" or "C" or "D" or "E" or "F"
-            print(f"\n{Fore.RED}Input is invalid.{Fore.GREEN} Please only choose on the options provided.")
+            print(f"\n{Fore.RED}Input is invalid.{Fore.GREEN} Please choose only on the options provided.")
             continue
     except:
         continue

@@ -13,10 +13,10 @@
     pip install pandas-datareader
     pip install alive-progress or alive-bar
 
-# to avoid sklearn.externals.six incompatibility
+To avoid sklearn.externals.six incompatibility
     from six import StringIO
     donwload graphviz
-then add this line
+Then add this line
     import os
     os.environ["PATH"] += os.pathsep + 'C:\Program Files\Graphviz/bin/'
 
