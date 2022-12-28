@@ -15,11 +15,12 @@ from alive_progress import alive_bar
 import time
 #Delay output
 from time import sleep
+import csv
 
 ########-----OPTIONS LIST-----########
 def options_list():
     print("\n\nPLEASE CHOOSE AN OPTION!")
-    print(f"\n\n{Fore.GREEN}[A] {Fore.WHITE}View Customer Loan Info.")
+    print(f"\n\n{Fore.GREEN}[A] {Fore.WHITE}View Customer Info.")
     print(f"\n{Fore.GREEN}[B] {Fore.WHITE}Show Credit Score.")
     print(f"\n{Fore.GREEN}[C] {Fore.WHITE}Check Credit Score Bar Graph.")
     print(f"\n{Fore.GREEN}[D] {Fore.WHITE}View Decision Tree.")
@@ -241,7 +242,7 @@ Total = len(exceptional) + len(verygood) + len(good) + len(fair) + len(poor)
 # #Predict the response for test dataset
 # y_pred = clf.predict(X_test)
 
-# # Model Accuracy, how often is the classifier correct?
+# Model Accuracy, how often is the classifier correct?
 # print("Accuracy:",metrics.accuracy_score(y_test, y_pred))
 
 # #Libraries for graphing
@@ -264,29 +265,98 @@ Total = len(exceptional) + len(verygood) + len(good) + len(fair) + len(poor)
 #G. Options list to command
 options_list()
 
+def askidshow():
+    iddf = pd.read_csv('data/testsmalldata/calculated_shortcredit_train.csv')
+    askinputid = input(f"{Fore.GREEN}\nPlease enter Customer ID:")
+    print("\n")
+    askinputid = int(askinputid)
+    if askinputid >=1 and askinputid <=122:
+        print(newDF.iloc[askinputid-1])
+        print("\n")
+    else:
+        print("Sorry! That ID does not exist.")
+
 #H Ask for option and validate if valid input or not (Should be at the end)
 while True:
     try:
         input1 = input("\nSelect Option:") 
 
         if input1 == "A":
+            ###---Loan Info---###
             print(f"\n{Fore.GREEN}You've Choosen option A")
-            break
+            print(f"\n{Fore.GREEN}CUSTOMER ID LIST:")
+            #1. Display CUSTOMER ID
+            with open('data/testsmalldata/calculated_shortcredit_train.csv', newline='') as csvfile:
+                newdataset1 = csv.DictReader(csvfile)
+                print("Customer ID")
+                print("--------------------")
+                for row in newdataset1:
+                    print(row['Customer_ID'])
+            #2. Ask for input in which Customer info to show
+            askidshow()
+            #3. While loop for viewing other Customer ID
+            while True:
+                try:
+                    askinputA = input(f"\n {Fore.GREEN}Do you want to view other Customer ID? (Y/N):")
+                    if askinputA == "Y":
+                        askidshow()
+                        continue
+                    elif askinputA == "N":
+                        print(f"\n{Fore.GREEN}Returning...\n\n")
+                        break
+                    else:
+                        askinputA != "Y" or "N" 
+                        print(f"\n{Fore.RED}Input is invalid.{Fore.GREEN} Please choose only on the options provided.")
+                        continue
+                except:
+                    break
+            #4. Display options after the while loop ended
+            sleep(2.60)
+            options_list()
+            continue
         elif input1 == "B":
-            print(f"\n{Fore.GREEN}You've Choosen option B")
-            break
+            ###---Show CScore---###
+            print(f"\n{Fore.GREEN}You've Choosen option B\n\n")
+            print(f"\n{Fore.GREEN}CREDIT SCORES LIST:")
+            #1.display
+            with open('data/testsmalldata/calculated_shortcredit_train.csv', newline='') as csvfile:
+                newdataset2 = csv.DictReader(csvfile)
+                print("Customer ID | Credit Score")
+                print("---------------------------------")
+                for row in newdataset2:
+                    print(row['Customer_ID'], row['Score'])
+            #2.Ask input
+            askinputB = input(f"\n {Fore.GREEN}Do you want to choose another option? (Y/N):") 
+            if askinputB == "Y":
+                print(f"\n{Fore.GREEN}Returning...\n\n")
+                sleep(1.70)
+                options_list()
+                continue
+            elif askinputB == "N":
+                print(f"\n{Fore.RED}Closing...\n\n")
+                break
+            else:
+                print(f"\n{Fore.RED}Invalid input, terminating program..\n\n")
+                break
+            
         elif input1 == "C": 
-            ###---BAR CHART OPTION---###
+            ###---CScore BAR Graph---###
             print(f"\n{Fore.GREEN}You've Choosen option C")
+            print(f"\n{Fore.GREEN}BAR GRAPH:")
+            #1. Call bar chart function
             bar_chart()
             print(f"\n{Fore.GREEN}Graph Exited. Returning...\n\n")
-            sleep(1.75)
+            #2. Delay output(to be readable)
+            sleep(2.00)
+            #3. Call Options list
             options_list()
             continue
         elif input1 == "D":
+            ###---Decision Tree---###
             print(f"\n{Fore.GREEN}You've Choosen option D")
             break
         elif input1 == "E":
+            ###---About CSPA---###
             print(f"\n{Fore.GREEN}You've Choosen option E")
             break
         elif input1 == "F":
@@ -310,4 +380,3 @@ while True:
     except:
         continue
 
-#-------------------END OF INTRODUCTION-------------#
