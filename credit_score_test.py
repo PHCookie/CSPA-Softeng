@@ -4,6 +4,7 @@ import pandas as pd
 import math
 from types import FrameType
 import matplotlib.pyplot as plt
+from matplotlib import image as mpimg
 from sklearn.tree import DecisionTreeClassifier # Import Decision Tree Classifier
 from sklearn.model_selection import train_test_split # Import train_test_split function
 from sklearn import metrics #Import scikit-learn metrics module for accuracy calculation
@@ -16,16 +17,16 @@ import time
 #Delay output
 from time import sleep
 import csv
-
+#Show png
+from PIL import Image
 ########-----OPTIONS LIST-----########
 def options_list():
     print("\n\nPLEASE CHOOSE AN OPTION!")
     print(f"\n\n{Fore.GREEN}[A] {Fore.WHITE}View Customer Info.")
     print(f"\n{Fore.GREEN}[B] {Fore.WHITE}Show Credit Score.")
     print(f"\n{Fore.GREEN}[C] {Fore.WHITE}Check Credit Score Bar Graph.")
-    print(f"\n{Fore.GREEN}[D] {Fore.WHITE}View Decision Tree.")
-    print(f"\n{Fore.GREEN}[E] {Fore.WHITE}About the CSPA.")
-    print(f"\n{Fore.RED}[F] {Fore.WHITE}Exit.")
+    print(f"\n{Fore.GREEN}[D] {Fore.WHITE}About the CSPA.")
+    print(f"\n{Fore.RED}[E] {Fore.WHITE}Exit.")
 ########-----END OF OPTIONS LIST-----########
 
 
@@ -222,49 +223,11 @@ Total = len(exceptional) + len(verygood) + len(good) + len(fair) + len(poor)
 #######-----------END OF SCORE CATEGORIZATION---------------########
 
 
-#F.###----------------------------DECISION TREE ALGORITHM--------------------###
-#Converting scores from float to integer
-# y_cols = score_range["Loan"]
-# x_cols = ['Current Loan Amount', 'Years in current job', 'Monthly Debt','Years of Credit History', 'Months since last delinquent','Number of Open Accounts', 'Current Credit Balance', 'Maximum Open Credit']
 
-# X = score_range[x_cols]# Features
-# y = y_cols # Target variable
-
-# #Split dataset into training set and test set
-# X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=1) # 70% training and 30% test
-
-# # Create Decision Tree classifer object
-# clf = DecisionTreeClassifier(criterion="entropy", max_depth=3)
-
-# # Train Decision Tree Classifer
-# clf = clf.fit(X_train,y_train)
-
-# #Predict the response for test dataset
-# y_pred = clf.predict(X_test)
-
-# Model Accuracy, how often is the classifier correct?
-# print("Accuracy:",metrics.accuracy_score(y_test, y_pred))
-
-# #Libraries for graphing
-# from sklearn.tree import export_graphviz 
-# from six import StringIO
-# from IPython.display import Image  
-# import pydotplus
-# import os
-# os.environ["PATH"] += os.pathsep + 'C:\Program Files\Graphviz/bin/'
-
-# dot_data = StringIO()
-# export_graphviz(clf, out_file=dot_data,  
-#                 filled=True, rounded=True,  
-#                 special_characters=True, feature_names = x_cols,class_names=['0','1'])
-# graph = pydotplus.graph_from_dot_data(dot_data.getvalue())  
-# graph.write_png('dtm.png')
-# Image(graph.create_png())
-#########---------------------END OF DECISION TREE----------------------##################
-
-#G. Options list to command
+######------ Options list to command------######
 options_list()
 
+#1. For viewing customer ID function
 def askidshow():
     iddf = pd.read_csv('data/testsmalldata/calculated_shortcredit_train.csv')
     askinputid = input(f"{Fore.GREEN}\nPlease enter Customer ID:")
@@ -276,7 +239,7 @@ def askidshow():
     else:
         print("Sorry! That ID does not exist.")
 
-#H Ask for option and validate if valid input or not (Should be at the end)
+#2. Ask for option and validate if valid input or not.
 while True:
     try:
         input1 = input("\nSelect Option:") 
@@ -351,22 +314,19 @@ while True:
             #3. Call Options list
             options_list()
             continue
-        elif input1 == "D":
-            ###---Decision Tree---###
+        elif input1 == "D": 
+            ###---About CSPA---###
             print(f"\n{Fore.GREEN}You've Choosen option D")
+            print(f"\n{Fore.WHITE}CSPA by CSWarriors V.1")
             break
         elif input1 == "E":
-            ###---About CSPA---###
             print(f"\n{Fore.GREEN}You've Choosen option E")
-            break
-        elif input1 == "F":
-            print(f"\n{Fore.GREEN}You've Choosen option F")
-            exitinputF = input("\nAre you sure you want to exit? (Y/N):") 
-            if exitinputF == "N":
+            exitinputE = input("\nAre you sure you want to exit? (Y/N):") 
+            if exitinputE == "N":
                 print(f"\n{Fore.GREEN}Returning...\n\n")
                 options_list()
                 continue
-            elif exitinputF == "Y":
+            elif exitinputE == "Y":
                 print(f"\n{Fore.RED}Closing...\n\n")
                 break
             else:
@@ -374,7 +334,7 @@ while True:
                 break
         #H.1 IF outside the options, then ask again
         else:
-            input1 != "A" or "B" or "C" or "D" or "E" or "F"
+            input1 != "A" or "B" or "C" or "D" or "E"
             print(f"\n{Fore.RED}Input is invalid.{Fore.GREEN} Please choose only on the options provided.")
             continue
     except:

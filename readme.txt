@@ -7,6 +7,7 @@
     pip install regex
     pip install scikit-learn
     pip install matplotlib
+    pip install ipython
 
     #Text Design
     pip install colorama
