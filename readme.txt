@@ -16,7 +16,7 @@
 
 To avoid sklearn.externals.six incompatibility
     from six import StringIO
-    donwload graphviz
+    Then download graphviz with the OS.environ path
 Then add this line
     import os
     os.environ["PATH"] += os.pathsep + 'C:\Program Files\Graphviz/bin/'

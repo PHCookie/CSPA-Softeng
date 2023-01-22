@@ -75,14 +75,14 @@ with alive_bar(100) as bar:
         if x == 25:
             print(f"{Fore.GREEN}[25%]{Fore.WHITE}Checking Dataset..")
             # Checking
-            dataset = pd.read_csv('data/testsmalldata/shortcredit_train.csv')
+            dataset = pd.read_csv('data/cspa_data.csv')
             #To display values in 2 decimal places
             pd.options.display.float_format = '{:.2f}'.format
 
         if x == 50:
             print(f"{Fore.GREEN}[50%]{Fore.WHITE}Importing..")
             #Remove unwanted values "999999999"
-            df = dataset[dataset["Current Loan Amount"] < 99999999 ]
+            df = dataset[dataset["Current Loan Amount"] < 999999 ]
             #- --> not checked yet <---
             # drop all empty credit scores 
             # df = df[df['Credit Score'].notna()]
@@ -115,7 +115,7 @@ with alive_bar(100) as bar:
             #END OF PAYMENT HISTORY--------------------------------------------------|
 
             #2. AMOUNTS OWED --------------------------------------------------------|
-            value1 = clean_dataset["Current Credit Balance"]
+            value1 = clean_dataset["Current Loan Amount"]
             value2 = clean_dataset["Maximum Open Credit"]
             p_borrow = (value1 / value2) 
             # print(p_borrow)
@@ -142,14 +142,17 @@ with alive_bar(100) as bar:
 
             #FINAL SCORE FOR LENGTH OF CREDIT HISTORY
             final_minor3_score = years + final_delinquent
+            # print(final_minor3_score)
             #END OF LENGTH OF CREDIT HISTORY-----------------------------------------|
 
             #4 NEW CREDIT / CREDIT MIX-----------------------------------------------|
-            final_minor4_score = accounts 
+            final_minor4_score = accounts * 10 #Each new Account equivalent to 10  points
+            # print(final_minor4_score)
             #END OF NEW CREDIT / CREDIT MIX------------------------------------------|
 
             #5 STARTING SCORE--------------------------------------------------------|
             starting_score = 300
+            # print(starting_score)
 
             #Total of all scores
             Credit_score = starting_score + final_minor1_score + final_minor2_score + final_minor3_score + final_minor4_score
@@ -160,15 +163,15 @@ with alive_bar(100) as bar:
             ###-----ADDING NEW COLUMNS WITH CALCULATED VALUES TO CSV-----###
             ###------------SAVING CALCULATED CSV WITH SCORES-------------###
             dataset["Score"] = format_Credit_score
-            dataset.to_csv("data/testsmalldata/calculated_shortcredit_train.csv", index=False)
+            dataset.to_csv("data/calculated_cspa_data.csv", index=False)
             #to display all output values
             pd.set_option("display.max_rows", None, "display.max_columns", None)
 
             #NOW LOADING THE NEW DATASET WITH SCORES
-            newDF = pd.read_csv('data/testsmalldata/calculated_shortcredit_train.csv', header=0)
+            newDF = pd.read_csv('data/calculated_cspa_data.csv', header=0)
             # replace NaN values with 0
             newDF= newDF.fillna(0)
-
+            print(newDF["Score"])
             print(f"{Fore.GREEN}[100%]{Fore.WHITE}Dataset Successfully loaded")
         bar()
 print(Fore.GREEN +"\n\n|---------------------SUCCESSFULLY LOADED--------------------|")
@@ -229,7 +232,7 @@ options_list()
 
 #1. For viewing customer ID function
 def askidshow():
-    iddf = pd.read_csv('data/testsmalldata/calculated_shortcredit_train.csv')
+    iddf = pd.read_csv('data/calculated_cspa_data.csv')
     askinputid = input(f"{Fore.GREEN}\nPlease enter Customer ID:")
     print("\n")
     askinputid = int(askinputid)
@@ -249,7 +252,7 @@ while True:
             print(f"\n{Fore.GREEN}You've Choosen option A")
             print(f"\n{Fore.GREEN}CUSTOMER ID LIST:")
             #1. Display CUSTOMER ID
-            with open('data/testsmalldata/calculated_shortcredit_train.csv', newline='') as csvfile:
+            with open('data/calculated_cspa_data.csv', newline='') as csvfile:
                 newdataset1 = csv.DictReader(csvfile)
                 print("Customer ID")
                 print("--------------------")
@@ -282,7 +285,7 @@ while True:
             print(f"\n{Fore.GREEN}You've Choosen option B\n\n")
             print(f"\n{Fore.GREEN}CREDIT SCORES LIST:")
             #1.display
-            with open('data/testsmalldata/calculated_shortcredit_train.csv', newline='') as csvfile:
+            with open('data/calculated_cspa_data.csv', newline='') as csvfile:
                 newdataset2 = csv.DictReader(csvfile)
                 print("Customer ID | Credit Score")
                 print("---------------------------------")
