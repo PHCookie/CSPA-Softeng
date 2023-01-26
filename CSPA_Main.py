@@ -75,7 +75,7 @@ with alive_bar(100) as bar:
         if x == 25:
             print(f"{Fore.GREEN}[25%]{Fore.WHITE}Checking Dataset..")
             # Checking
-            dataset = pd.read_csv('data/cspa_data.csv')
+            dataset = pd.read_csv('data/final_cspa_data.csv')
             #To display values in 2 decimal places
             pd.options.display.float_format = '{:.2f}'.format
 
@@ -163,12 +163,12 @@ with alive_bar(100) as bar:
             ###-----ADDING NEW COLUMNS WITH CALCULATED VALUES TO CSV-----###
             ###------------SAVING CALCULATED CSV WITH SCORES-------------###
             dataset["Score"] = format_Credit_score
-            dataset.to_csv("data/calculated_cspa_data.csv", index=False)
+            dataset.to_csv("data/calculated_final_cspa_data.csv", index=False)
             #to display all output values
             pd.set_option("display.max_rows", None, "display.max_columns", None)
 
             #NOW LOADING THE NEW DATASET WITH SCORES
-            newDF = pd.read_csv('data/calculated_cspa_data.csv', header=0)
+            newDF = pd.read_csv('data/calculated_final_cspa_data.csv', header=0)
             # replace NaN values with 0
             newDF= newDF.fillna(0)
             print(newDF["Score"])
@@ -232,7 +232,7 @@ options_list()
 
 #1. For viewing customer ID function
 def askidshow():
-    iddf = pd.read_csv('data/calculated_cspa_data.csv')
+    iddf = pd.read_csv('data/calculated_final_cspa_data.csv')
     askinputid = input(f"{Fore.GREEN}\nPlease enter Customer ID:")
     print("\n")
     askinputid = int(askinputid)
@@ -252,7 +252,7 @@ while True:
             print(f"\n{Fore.GREEN}You've Choosen option A")
             print(f"\n{Fore.GREEN}CUSTOMER ID LIST:")
             #1. Display CUSTOMER ID
-            with open('data/calculated_cspa_data.csv', newline='') as csvfile:
+            with open('data/calculated_final_cspa_data.csv', newline='') as csvfile:
                 newdataset1 = csv.DictReader(csvfile)
                 print("Customer ID")
                 print("--------------------")
@@ -285,7 +285,7 @@ while True:
             print(f"\n{Fore.GREEN}You've Choosen option B\n\n")
             print(f"\n{Fore.GREEN}CREDIT SCORES LIST:")
             #1.display
-            with open('data/calculated_cspa_data.csv', newline='') as csvfile:
+            with open('data/calculated_final_cspa_data.csv', newline='') as csvfile:
                 newdataset2 = csv.DictReader(csvfile)
                 print("Customer ID | Credit Score")
                 print("---------------------------------")
