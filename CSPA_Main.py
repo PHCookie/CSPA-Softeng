@@ -30,7 +30,7 @@ def options_list():
 ########-----END OF OPTIONS LIST-----########
 
 
-########-----LOAN  BAR CHART-----######## (NOT CHECKED)
+########-----LOAN  BAR CHART-----######## 
 def bar_chart():
     Category = ['Poor','Fair','Good','Very Good','Exceptional']
     Number_of_Customer = [len(poor), len(fair), len(good), len(verygood),len(exceptional)]
@@ -106,11 +106,12 @@ with alive_bar(100) as bar:
             #1.c Accounts: Types of accounts considered for credit payment history
             accounts = clean_dataset["Number of Open Accounts"]
             #1.d The amount of time that's passed since delinquencies.
-            delinquent = clean_dataset['Months since last delinquent']
+            # delinquent = clean_dataset['Months since last delinquent'] (Notadded should be dudcted)
 
             #FINAL SCORE FOR PAYMENT HISTORY
-            minor1_score = calc_value + accounts + years_ch + job + delinquent
+            minor1_score = calc_value + accounts + years_ch + job  
             final_minor1_score=round(minor1_score, 2)
+            # print("Payment History Score:")
             # print(final_minor1_score)
             #END OF PAYMENT HISTORY--------------------------------------------------|
 
@@ -118,13 +119,11 @@ with alive_bar(100) as bar:
             value1 = clean_dataset["Current Loan Amount"]
             value2 = clean_dataset["Maximum Open Credit"]
             p_borrow = (value1 / value2) 
-            # print(p_borrow)
-            # 30% of 850 = 255
             score2 = 255 * (1 - p_borrow) 
-            # print(score2)
 
             #FINAL SCORE FOR ACCOUNTS OWED
-            final_minor2_score = score2 
+            final_minor2_score = score2
+         
             # print(final_minor2_score)
             #END OF AMOUNTS OWED ----------------------------------------------------|
 
@@ -147,6 +146,7 @@ with alive_bar(100) as bar:
 
             #4 NEW CREDIT / CREDIT MIX-----------------------------------------------|
             final_minor4_score = accounts * 10 #Each new Account equivalent to 10  points
+            # print("Credit Mix Score:")
             # print(final_minor4_score)
             #END OF NEW CREDIT / CREDIT MIX------------------------------------------|
 
@@ -171,7 +171,7 @@ with alive_bar(100) as bar:
             newDF = pd.read_csv('data/calculated_final_cspa_data.csv', header=0)
             # replace NaN values with 0
             newDF= newDF.fillna(0)
-            print(newDF["Score"])
+            # print(newDF["Score"])
             print(f"{Fore.GREEN}[100%]{Fore.WHITE}Dataset Successfully loaded")
         bar()
 print(Fore.GREEN +"\n\n|---------------------SUCCESSFULLY LOADED--------------------|")
