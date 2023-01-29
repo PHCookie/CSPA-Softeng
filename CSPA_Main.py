@@ -247,7 +247,7 @@ while True:
     try:
         input1 = input("\nSelect Option:") 
 
-        if input1 == "A":
+        if input1.capitalize() == "A":
             ###---Loan Info---###
             print(f"\n{Fore.GREEN}You've Choosen option A")
             print(f"\n{Fore.GREEN}CUSTOMER ID LIST:")
@@ -264,10 +264,10 @@ while True:
             while True:
                 try:
                     askinputA = input(f"\n {Fore.GREEN}Do you want to view other Customer ID? (Y/N):")
-                    if askinputA == "Y":
+                    if askinputA.capitalize() == "Y":
                         askidshow()
                         continue
-                    elif askinputA == "N":
+                    elif askinputA.capitalize() == "N":
                         print(f"\n{Fore.GREEN}Returning...\n\n")
                         break
                     else:
@@ -280,7 +280,7 @@ while True:
             sleep(2.60)
             options_list()
             continue
-        elif input1 == "B":
+        elif input1.capitalize() == "B":
             ###---Show CScore---###
             print(f"\n{Fore.GREEN}You've Choosen option B\n\n")
             print(f"\n{Fore.GREEN}CREDIT SCORES LIST:")
@@ -305,7 +305,7 @@ while True:
                 print(f"\n{Fore.RED}Invalid input, terminating program..\n\n")
                 break
             
-        elif input1 == "C": 
+        elif input1.capitalize() == "C": 
             ###---CScore BAR Graph---###
             print(f"\n{Fore.GREEN}You've Choosen option C")
             print(f"\n{Fore.GREEN}BAR GRAPH:")
@@ -317,12 +317,12 @@ while True:
             #3. Call Options list
             options_list()
             continue
-        elif input1 == "D": 
+        elif input1.capitalize() == "D": 
             ###---About CSPA---###
             print(f"\n{Fore.GREEN}You've Choosen option D")
             print(f"\n{Fore.WHITE}CSPA by CSWarriors V.1")
             break
-        elif input1 == "E":
+        elif input1.capitalize() == "E":
             print(f"\n{Fore.GREEN}You've Choosen option E")
             exitinputE = input("\nAre you sure you want to exit? (Y/N):") 
             if exitinputE == "N":
