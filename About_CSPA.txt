@@ -2,5 +2,7 @@ CSPA by CSWarriors V.1
 
 Our system is a very early version of a FICO-based credit scoring system that will assist with LSU COOP's in loaning decisions.
 
-It operates through, firstly, calculating scores dependent on the given COOP data, as well as utilizing an ML Random Forest,
-with an online dataset as its training input.
+It operates through, firstly, calculating scores dependent on the given COOP data, as well as utilizing an ML Random Forest, with an online dataset as its training input. For transparency, this operation will be further explained below:
+
+
+#to be continued - source: coder is sleepy
