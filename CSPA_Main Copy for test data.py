@@ -162,6 +162,11 @@ with alive_bar(100) as bar:
         if x == 99:
             ###-----ADDING NEW COLUMNS WITH CALCULATED VALUES TO CSV-----###
             ###------------SAVING CALCULATED CSV WITH SCORES-------------###
+            dataset["Starting_Score"] = starting_score
+            dataset["Payment_History_Score"] = final_minor1_score
+            dataset["Amount_Owed_Score"] = final_minor2_score
+            dataset["Length_Credit_Score"] = final_minor3_score
+            dataset["Credit_Mix_Score"] = final_minor4_score
             dataset["CSPAScore"] = format_Credit_score
             dataset.to_csv("Backup/calculated_orig_credit_train.csv", index=False)
             #to display all output values

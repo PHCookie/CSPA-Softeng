@@ -82,7 +82,7 @@ with alive_bar(100) as bar:
         if x == 50:
             print(f"{Fore.GREEN}[50%]{Fore.WHITE}Importing..")
             #Remove unwanted values "999999999"
-            df = dataset[dataset["Current Loan Amount"] < 999999 ]
+            df = dataset[dataset["Current Loan Amount"] < 99999999 ]
             #- --> not checked yet <---
             # drop all empty credit scores 
             # df = df[df['Credit Score'].notna()]
@@ -116,7 +116,7 @@ with alive_bar(100) as bar:
             #END OF PAYMENT HISTORY--------------------------------------------------|
 
             #2. AMOUNTS OWED --------------------------------------------------------|
-            value1 = clean_dataset["Current Loan Amount"]
+            value1 = clean_dataset["Current Credit Balance"]
             value2 = clean_dataset["Maximum Open Credit"]
             p_borrow = (value1 / value2) 
             score2 = 255 * (1 - p_borrow) 
@@ -162,6 +162,11 @@ with alive_bar(100) as bar:
         if x == 99:
             ###-----ADDING NEW COLUMNS WITH CALCULATED VALUES TO CSV-----###
             ###------------SAVING CALCULATED CSV WITH SCORES-------------###
+            dataset["Starting_Score"] = starting_score
+            dataset["Payment_History_Score"] = final_minor1_score
+            dataset["Amount_Owed_Score"] = final_minor2_score
+            dataset["Length_Credit_Score"] = final_minor3_score
+            dataset["Credit_Mix_Score"] = final_minor4_score
             dataset["Score"] = format_Credit_score
             dataset.to_csv("data/calculated_final_cspa_data.csv", index=False)
             #to display all output values
