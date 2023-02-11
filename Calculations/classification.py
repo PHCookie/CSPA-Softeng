@@ -12,7 +12,7 @@ def byRandomForest(dataset):
     testingFrame = dataset
     
     # Using Generated Credit Score as class indicator
-    header = ['payhis','amtowed','lenofcrhis','newcred','Score']
+    header = ['payhis','amtowed','lenofcrhis','newcred']
     
     X = df[header]
     y = df["FICO Score"]

@@ -68,7 +68,7 @@ def getscore(dataset):
     #5 STARTING SCORE--------------------------------------------------------|
 
     #Total of all scores
-    Credit_score = final_minor1_score + final_minor2_score + final_minor3_score + final_minor4_score + 20
+    Credit_score = final_minor1_score + final_minor2_score + final_minor3_score + final_minor4_score
     format_Credit_score = round(Credit_score)
 
     #Saving scores to CSV
