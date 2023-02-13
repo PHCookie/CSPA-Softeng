@@ -39,33 +39,34 @@ def byRandomForest(dataset):
 # Using the'CSPA scoring' ranges for Score Classing -
 # More transparent, accuracy 66% tested with online dataset
 def byCSPA(dataset):
-
+    
         #######-----------SCORE CATEGORIZATION---------------########
+    #Create new score column
+    dataset['CSPA Score'] = ''
+
     #Filter  Credit Scores Greater than 0 and less than 850.(FICO score range)
     filter_score = dataset[(dataset["Score"] > 0)]
-    
-    # Setting limit to scoring
-    filter_score = filter_score[(filter_score["Score"] > 0) & (filter_score["Score"] <= 900)] 
+    filter_score = filter_score[(filter_score["Score"] > 0) & (filter_score["Score"] <= 990)] 
 
     #5. Exceptional Credit Scores
-    filter_score['Class Score'] = filter_score['CSPA Score'].mask(filter_score["Score"] >= 820, filter_score['CSPA Score'].replace(0,"Exceptional"))
+    filter_score['CSPA Score'] = filter_score['CSPA Score'].mask(filter_score["Score"] >= 831, filter_score['CSPA Score'].replace('',"Exceptional"))
 
     #4. VERY GOOD Credit Scores
-    filter_score['Class Score'] = filter_score['CSPA Score'].mask(filter_score["Score"] >= 760, filter_score['CSPA Score'].replace(0, "Very Good"))
+    filter_score['CSPA Score'] = filter_score['CSPA Score'].mask(filter_score["Score"] >= 731, filter_score['CSPA Score'].replace('', "Very Good"))
 
 
     #3. Good Credit Scores
-    filter_score['Class Score'] = filter_score['CSPA Score'].mask(filter_score["Score"] >= 620, filter_score['CSPA Score'].replace(0,"Good"))
+    filter_score['CSPA Score'] = filter_score['CSPA Score'].mask(filter_score["Score"] >= 571, filter_score['CSPA Score'].replace('',"Good"))
 
 
     #2. Fair Credit Scores
-    filter_score['Class Score'] = filter_score['CSPA Score'].mask(filter_score["Score"] >= 530, filter_score['CSPA Score'].replace(0,"Fair"))
+    filter_score['CSPA Score'] = filter_score['CSPA Score'].mask(filter_score["Score"] >= 400, filter_score['CSPA Score'].replace('',"Fair"))
 
 
     #1. Poor Credit Scores
-    filter_score['Class Score'] = filter_score['CSPA Score'].mask(filter_score["Score"] > 0, filter_score['CSPA Score'].replace(0,"Poor"))
+    filter_score['CSPA Score'] = filter_score['CSPA Score'].mask(filter_score["Score"] > 0, filter_score['CSPA Score'].replace('',"Poor"))
 
-    return dataset
+    return filter_score
 
 
 
