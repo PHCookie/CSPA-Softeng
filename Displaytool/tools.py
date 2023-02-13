@@ -53,4 +53,42 @@ def askidshow():
                 continue
 
                 
+                
+def newuser(ID):
+#ask user input
+    LoanAmnt = input("\nEnter customer 'Current Loan Amount':")
+    CreditBal = input("\nEnter customer 'Current Credit Balance':")
+    MonthDebt = input("\nEnter customer 'Monthly Debt':")
+    YearsJob = input("\nEnter customer 'Years in current job':")
+    CredHist = input("\nEnter customer 'Years of Credit History':")
+    OpenAcc = input("\nEnter customer 'Number of Open Accounts':")
+    MonthDel = input("\nEnter customer 'Months since last delinquent':")
+    MaxOpCred = input("\nEnter customer 'Maximum Open Credit':")
+
+
+    dict = {'Customer ID': ID+1, 'Current Loan Amount': LoanAmnt, 'Current Credit Balance': CreditBal,
+            'Monthly Debt': MonthDebt, 'Years in current job': YearsJob, 'Years of Credit History': CredHist,
+            'Number of Open Accounts': OpenAcc, 'Months since last delinquent': MonthDel, 'Maximum Open Credit': MaxOpCred}
+
+ 
+
+    new = [ID+1,LoanAmnt,CreditBal,MonthDebt,YearsJob, CredHist, OpenAcc, MonthDel, MaxOpCred]
+    print("\n\nPlease review input: \n", dict)
+    sleep(1.50)
+
+    while True:
+    
+        input1 = input("\n\nRedo information (Y/N)?: ")
+
+        if input1.capitalize() == "Y":
+            newuser(ID)
+
+        elif input1.capitalize() == "N":
+            break
+
+        else:
+            print('Wrong input.') 
+
+
+    return dict
 
