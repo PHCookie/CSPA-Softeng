@@ -10,8 +10,9 @@ def options_list():
     print(f"\n\n{Fore.GREEN}[A] {Fore.WHITE}View Customer Info.")
     print(f"\n{Fore.GREEN}[B] {Fore.WHITE}Show Credit Score.")
     print(f"\n{Fore.GREEN}[C] {Fore.WHITE}Check Credit Score Bar Graph.")
-    print(f"\n{Fore.GREEN}[D] {Fore.WHITE}About the CSPA.")
-    print(f"\n{Fore.RED}[E] {Fore.WHITE}Exit.")
+    print(f"\n{Fore.GREEN}[D] {Fore.WHITE}Enter new user data.")
+    print(f"\n{Fore.GREEN}[E] {Fore.WHITE}About the CSPA.")
+    print(f"\n{Fore.RED}[F] {Fore.WHITE}Exit.")
 ########-----END OF OPTIONS LIST-----########
 
 

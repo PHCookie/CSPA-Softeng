@@ -14,6 +14,7 @@ import csv
 import Calculations.scoring as cal 
 import Calculations.classification as classi
 import Displaytool.tools as tool
+from csv import DictWriter
 
 #######-----------HEADER---------------########
 colorama.init(autoreset=True)
@@ -137,16 +138,41 @@ while Exit == False:
             tool.options_list()
             continue
 
-        elif input1.capitalize() == "D": 
+        elif input1.capitalize() == "E": 
             ###---About CSPA---###
-            print(f"\n{Fore.GREEN}You've Choosen option D")
+            print(f"\n{Fore.GREEN}You've Choosen option E")
             print(f"\n{Fore.WHITE}CSPA by CSWarriors V.1")
             osCommandString = "notepad.exe About_CSPA.txt"
             os.system(osCommandString)
 
-        elif input1.capitalize() == "E":
+        elif input1.capitalize() == "D":
+            ###---New Data---###
+            print(f"\n{Fore.GREEN}You've Choosen option D")
 
-            print(f"\n{Fore.GREEN}You've Choosen option E")
+            field_names = [['Customer ID', 'Current Loan Amount', 'Current Credit Balance',
+                'Monthly Debt', 'Years in current job','Years of Credit History',
+                'Number of Open Accounts', 'Months since last delinquent', 'Maximum Open Credit'],]
+
+            with open('data/Dataset_Scored.csv','a', newline='') as csvfile:    
+
+                # Gather new user data
+                dict = tool.newuser(dataset.iloc[-1,0])
+               
+                # Pass the dictionary as an argument to the Writerow()
+                dictwriter_object = DictWriter(csvfile, fieldnames=field_names[0])
+                dictwriter_object.writerow(dict)
+
+            dataset = pd.read_csv('data/Dataset_Scored.csv')
+            #get calculations
+            scored = cal.getscore(dataset)
+
+            #get classification
+            final = classi.byCSPA(scored)
+            final.to_csv('data/Dataset_Scored.csv', index=False)
+        
+        elif input1.capitalize() == "F":
+
+            print(f"\n{Fore.GREEN}You've Choosen option F")
             exitinputE = input("\nAre you sure you want to exit? (Y/N):") 
             if exitinputE.capitalize() == "N":
                 print(f"\n{Fore.GREEN}Returning...\n\n")
@@ -159,9 +185,8 @@ while Exit == False:
             else:
                 print(f"\n{Fore.RED}Invalid input, returning... \n\n")
         #H.1 IF outside the options, then ask again
-        
         else:
-            input1 != "A" or "B" or "C" or "D" or "E"
+            input1 != "A" or "B" or "C" or "D" or "E" or "F"
             print(f"\n{Fore.RED}Input is invalid.{Fore.GREEN} Please choose only on the options provided.")
             continue
     except:
