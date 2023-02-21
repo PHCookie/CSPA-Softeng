@@ -11,8 +11,8 @@ This project requires further test and research to improve the accuracy of the a
 
 
 Created and Documented by:
-Samantha Andrea S. Guadalquiver
-Samantha Nicole N. Bayaga
+Samantha Andrea S. Guadalquiver,
+Samantha Nicole N. Bayaga, and
 Ruben G. Tagama
 
 2021-2023 @ La Salle University - Ozamiz
