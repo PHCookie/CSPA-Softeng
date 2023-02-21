@@ -1,10 +1,10 @@
 # CSPA-Softeng/Thesis
-Software Engineering Project - Credit Scoring and Predictive Analytics Algorithm
+Software Engineering/ Thesis Project - Credit Scoring Using Predictive Analytics Algorithm
 
 The aim of this project is to imitate FICO algorithm, with respect to the transparency in order to understand how the calculation works and to explain why such scores are calculated.
-Several test methods are used such as Naives Method and Random Forest, to enhance the accuracy of the result compared to the original FICO algoprithm.
+Several test methods are used such as Naives Method and Random Forest, to enhance the accuracy of the result compare to the original FICO algorithm.
 
-The Dataset used is gathered through an online website Kaggle, it contains calculated FICO scores which are used to compared to our own ALgorithm scores.
+The Dataset used is obtained through an online website Kaggle, it contains calculated FICO scores which are used to compared to our own Algorithm scores.
 
 This project requires further test and research to improve the accuracy of the algorithm's result.
 
