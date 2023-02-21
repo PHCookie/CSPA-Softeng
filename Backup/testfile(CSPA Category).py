@@ -11,7 +11,7 @@ from sklearn import metrics #Import scikit-learn metrics module for accuracy cal
 #to display all output values
 pd.set_option("display.max_rows", None, "display.max_columns", None)
 
-df = pd.read_csv('Backup/calculated_orig_credit_train copy.csv')
+df = pd.read_csv('Data/FICODataset_scored_CSPA.csv')
 df['CSPAScore'] = df['CSPAScore'].apply(lambda val: (val /10) if val>850 else val)
 
 df= df.fillna(0)

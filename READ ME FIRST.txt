@@ -1,0 +1,26 @@
+ Required Python Modules:
+    pip install numpy
+    pip install pandas
+    pip install pillow
+    pip install graphviz
+    pip install pydotplus
+    pip install regex
+    pip install scikit-learn
+    pip install matplotlib
+    pip install ipython
+
+    #Text Design
+    pip install colorama
+    pip install pandas-datareader
+    pip install alive-progress or alive-bar
+
+
+PLEASE READ THIS FIRST BEFORE RUNNING THE PROGRAM:
+1. Please install Microsoft visual Studio Code 2017 & above.
+2. Install Latest Python version.
+3. Please Install All required Python Modules and Libraries on the terminal (As Mentioned Above).
+4. Also Install Python and Jupyter Notebook in Miscrosoft Visual Studio Code Extension.
+4. Start and Run CSPA_Main.py or CSPAJPNbook.ipynb
+
+NOTE: Run CSPA_Main.py if you want to see the full feature of the algorithm and its simple designs.
+      Run CSPAJPNbook.ipynb if you want to see the result of each Block of Code, this requires Jupyter Notebook installed.

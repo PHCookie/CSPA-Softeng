@@ -130,7 +130,7 @@ while Exit == False:
             ###---CScore BAR Graph---###
             print(f"\n{Fore.GREEN}You've Choosen option C")
             print(f"\n{Fore.GREEN}BAR GRAPH:")
-            Number_of_Customer = classi.obtain(pd.read_csv('data/Dataset_Scored.csv'))
+            Number_of_Customer = classi.obtain(pd.read_csv('data/Dataset_scored.csv'))
             tool.bar_chart(Number_of_Customer)
             print(f"\n{Fore.RED}Graph Exited. Returning...\n\n")
             sleep(2.00)
