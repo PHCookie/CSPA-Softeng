@@ -1,4 +1,4 @@
-# CSPA-Softeng/Thesis
+# Credit Scoring Using Predictive Analysis
 Software Engineering/ Thesis Project - Credit Scoring Using Predictive Analytics Algorithm
 
 The aim of this project is to imitate FICO algorithm, with respect to the transparency in order to understand how the calculation works and to explain why such scores are calculated.
