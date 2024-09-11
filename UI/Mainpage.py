@@ -1,3 +1,4 @@
+import PIL
 import sys
 import tkinter as tk
 import tkinter.ttk as ttk
@@ -45,7 +46,7 @@ class MAINPAGE:
         self.BUTTONFRAME.configure(highlightcolor="black")
 
         #BUTTON 1 - IMAGE BUTTON
-        self.first_button=ImageTk.PhotoImage(Image.open('icon/member.png').resize((135,138),Image.ANTIALIAS))
+        self.first_button=ImageTk.PhotoImage(Image.open('icon/member.png').resize((135,138), PIL.Image.Resampling.LANCZOS))
         #BUTTON 1 - MEMBERLIST
         self.Button1 = tk.Button(self.BUTTONFRAME)
         self.Button1.place(relx=0.0, rely=0.014, height=60, width=60)
@@ -55,7 +56,7 @@ class MAINPAGE:
         self.Button1.configure(command=lambda:self.switch(self.MEMBERLISTFRAME))
         
         #BUTTON 2 - IMAGE BUTTON
-        self.second_button=ImageTk.PhotoImage(Image.open('icon/aboutcsdata.png').resize((70,73),Image.ANTIALIAS))
+        self.second_button=ImageTk.PhotoImage(Image.open('icon/aboutcsdata.png').resize((70,73),PIL.Image.Resampling.LANCZOS))
         #BUTTON 2 - ABOUT CC DTA
         self.Button2 = tk.Button(self.BUTTONFRAME)
         self.Button2.place(relx=0.0, rely=0.142, height=60, width=60)
@@ -65,7 +66,7 @@ class MAINPAGE:
         self.Button2.configure(command=lambda:self.switch(self.ABOUTCCDTA))
 
         #BUTTON 3 - IMAGE BUTTON
-        self.third_button=ImageTk.PhotoImage(Image.open('icon/visualization.png').resize((90,60),Image.ANTIALIAS))
+        self.third_button=ImageTk.PhotoImage(Image.open('icon/visualization.png').resize((90,60),PIL.Image.Resampling.LANCZOS))
         #BUTTON 3 - DATA VISUALIZATION
         self.Button3 = tk.Button(self.BUTTONFRAME)
         self.Button3.place(relx=0.0, rely=0.271, height=60, width=60)
@@ -75,7 +76,7 @@ class MAINPAGE:
         self.Button3.configure(command=lambda:self.switch(self.DATAVIS))
 
         #BUTTON 4 - IMAGE BUTTON
-        self.fourth_button=ImageTk.PhotoImage(Image.open('icon/aboutdataset.png').resize((90,60),Image.ANTIALIAS))
+        self.fourth_button=ImageTk.PhotoImage(Image.open('icon/aboutdataset.png').resize((90,60),PIL.Image.Resampling.LANCZOS))
         #BUTTON 4 - ABOUT DATASET
         self.Button4 = tk.Button(self.BUTTONFRAME)
         self.Button4.place(relx=0.0, rely=0.41, height=60, width=60)
@@ -85,7 +86,7 @@ class MAINPAGE:
         self.Button4.configure(command=lambda:self.switch(self.ABOUTDATA))
 
         #BUTTON 5 - IMAGE BUTTON
-        self.fifth_button=ImageTk.PhotoImage(Image.open('icon/decisiontree.png').resize((80,90),Image.ANTIALIAS))
+        self.fifth_button=ImageTk.PhotoImage(Image.open('icon/decisiontree.png').resize((80,90),PIL.Image.Resampling.LANCZOS))
         # BUTTON 5 - DECISION TREE
         self.Button5 = tk.Button(self.BUTTONFRAME)
         self.Button5.place(relx=0.0, rely=0.54, height=60, width=60)

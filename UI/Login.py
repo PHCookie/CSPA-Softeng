@@ -15,7 +15,7 @@ class Login:
         if response == 1:
             self.top.destroy()
             import os
-            os.system('python Registration.py')
+            os.system('python C:\\Users\\PHCookie\\Documents\\GitHub\\CSPA-Softeng\\UI\\Registration.py')
      
     def login_verification (self):
         
@@ -56,7 +56,7 @@ class Login:
         else:
             self.top.destroy()
             import os
-            os.system('python Mainpage.py')
+            os.system('python C:\\Users\\PHCookie\\Documents\\GitHub\\CSPA-Softeng\\UI\\Mainpage.py')
         
     
     def __init__(self, top=None):
