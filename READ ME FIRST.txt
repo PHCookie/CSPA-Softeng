@@ -9,6 +9,10 @@
     pip install matplotlib
     pip install ipython
 
+    #Require if using UI Mod
+    pip install tk //for tkinter only
+    pip install pillow //for images
+
     #Text Design
     pip install colorama
     pip install pandas-datareader
