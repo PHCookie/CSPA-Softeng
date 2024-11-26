@@ -75,19 +75,25 @@ with alive_bar(100) as bar:
         if x == 25:
             print(f"{Fore.GREEN}[25%]{Fore.WHITE}Checking Dataset..")
             # Checking
-            dataset = pd.read_csv('Data/FICODATA_modified.csv')
+            dataset = pd.read_csv('Data/credit_test_for_test.csv')
             #To display values in 2 decimal places
             pd.options.display.float_format = '{:.2f}'.format
 
         if x == 50:
             print(f"{Fore.GREEN}[50%]{Fore.WHITE}Importing..")
             #Remove unwanted values "999999999"
-            df = dataset[dataset["Current Loan Amount"] < 99999999 ]
+            #df = dataset[dataset["Current Loan Amount"] < 99999999 or dataset["Months since last delinquentt"] != "NA" ]
+            
+            # Replace "NA" strings with actual NaN values 
+            dataset['Months since last delinquent'] = dataset['Months since last delinquent'].replace("NA", pd.NA) 
+            # Remove the specified rows 
+            dataset= dataset[(dataset["Current Loan Amount"] != 999999) & (dataset["Months since last delinquent"].notna())]
             #- --> not checked yet <---
-            # drop all empty credit scores 
-            # df = df[df['Credit Score'].notna()]
+            #drop all empty credit scores 
+            df = dataset[dataset['Credit Score'].notna()]
             #drop all duplicates
             clean_dataset = df.drop_duplicates(subset='Customer ID')
+        
         
         #ALL Calculations Goes here
         if x == 75:
@@ -106,7 +112,7 @@ with alive_bar(100) as bar:
             #1.c Accounts: Types of accounts considered for credit payment history
             accounts = clean_dataset["Number of Open Accounts"]
             #1.d The amount of time that's passed since delinquencies.
-            delinquent = clean_dataset['Months since last delinquent']
+            delinquent = clean_dataset["Months since last delinquent"]
 
             #FINAL SCORE FOR PAYMENT HISTORY
             minor1_score = calc_value + accounts + years_ch + job + delinquent
@@ -168,12 +174,12 @@ with alive_bar(100) as bar:
             dataset["Length_Credit_Score"] = final_minor3_score
             dataset["Credit_Mix_Score"] = final_minor4_score
             dataset["CSPAScore"] = format_Credit_score
-            dataset.to_csv("Data/FICODataset_scored_CSPA.csv", index=False)
+            dataset.to_csv("Data/new_credit_test_CSPA.csv", index=False)
             #to display all output values
             pd.set_option("display.max_rows", None, "display.max_columns", None)
 
             #NOW LOADING THE NEW DATASET WITH SCORES
-            newDF = pd.read_csv('Data/FICODataset_scored_CSPA.csv', header=0)
+            newDF = pd.read_csv('Data/new_credit_test_CSPA.csv', header=0)
             # replace NaN values with 0
             newDF= newDF.fillna(0)
             # print(newDF["Score"])
@@ -290,7 +296,7 @@ while True:
             print(f"\n{Fore.GREEN}You've Choosen option B\n\n")
             print(f"\n{Fore.GREEN}CREDIT SCORES LIST:")
             #1.display
-            with open('data/calculated_final_cspa_data.csv', newline='') as csvfile:
+            with open('data/new_credit_test_CSPA.csv', newline='') as csvfile:
                 newdataset2 = csv.DictReader(csvfile)
                 print("Customer ID | Credit Score")
                 print("---------------------------------")

@@ -16,3 +16,10 @@ Samantha Nicole N. Bayaga, and
 Ruben G. Tagama
 
 2021-2023 @ La Salle University - Ozamiz
+
+
+UPDATES:
+NEW RELEASE V1.0 [11/26/2024 @ 12:30am]
+
+-Modified to add Random Forest 
+-More enhance prediction (ongoing)
